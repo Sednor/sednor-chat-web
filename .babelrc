@@ -1,0 +1,22 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false,
+        "targets": {
+          "browsers": [
+            "last 2 versions"
+          ]
+        }
+      }
+    ],
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    "syntax-flow",
+    "babel-plugin-syntax-flow",
+    "dynamic-import-webpack"
+  ]
+}
