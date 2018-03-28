@@ -17,6 +17,14 @@
   "plugins": [
     "syntax-flow",
     "babel-plugin-syntax-flow",
-    "dynamic-import-webpack"
-  ]
+    "dynamic-import-webpack",
+    "transform-react-inline-elements"
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "transform-react-remove-prop-types"
+      ]
+    }
+  }
 }
