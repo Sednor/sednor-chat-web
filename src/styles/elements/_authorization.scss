@@ -1,0 +1,90 @@
+.messenger-sign {
+  display: flex;
+  justify-content: center;
+  padding: 10vh 0;
+  .messenger-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2vh;
+    font-size: 2em;
+  }
+
+  .authorization-form {
+    display: flex;
+    justify-content: center;
+
+    .switch-button {
+      margin: 0 1%;
+      width: 100%;
+    }
+
+    .submit-button {
+      width: 100%;
+      background: $main-green-light;
+      border: none;
+      &:hover {
+        background: $main-green-dark;
+      }
+    }
+
+    .divider {
+      margin: 2.5vh 0;
+      font-size: 1.5em;
+      display: flex;
+      justify-content: center;
+      z-index: 1;
+
+      &:before {
+        display: inline-flex;
+        margin: 17px;
+        height: 2px;
+        content: " ";
+        text-shadow: none;
+        background-color: $main-green-dark;
+        width: 50%;
+      }
+      &:after {
+        display: inline-flex;
+        margin: 17px;
+        height: 2px;
+        content: " ";
+        text-shadow: none;
+        background-color: $main-green-dark;
+        width: 50%;
+      }
+    }
+
+    .social-network-login-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0;
+      width: 100%;
+      i {
+        display: flex;
+        flex: 0 0 auto;
+      }
+      .text {
+        display: flex;
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  .error-icon {
+    color: #9f0f07;
+    position: absolute;
+    font-size: 22px;
+    right: 97%;
+    margin-top: 1vh;
+  }
+
+  .error-input {
+    border: 2px solid #9f0f07;
+  }
+
+}
+
+
+
