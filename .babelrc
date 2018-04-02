@@ -18,12 +18,26 @@
     "syntax-flow",
     "babel-plugin-syntax-flow",
     "dynamic-import-webpack",
-    "transform-react-inline-elements"
+    "transform-react-inline-elements",
+    [
+      "transform-runtime",
+      {
+        "polyfill": false,
+        "regenerator": true
+      }
+    ]
   ],
   "env": {
     "production": {
       "plugins": [
-        "transform-react-remove-prop-types"
+        "transform-react-remove-prop-types",
+        [
+          "transform-runtime",
+          {
+            "polyfill": false,
+            "regenerator": true
+          }
+        ]
       ]
     }
   }

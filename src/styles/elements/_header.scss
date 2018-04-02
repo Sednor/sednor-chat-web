@@ -1,13 +1,17 @@
 .main-header {
+  font-family: 'Khand';
+  font-weight: bold;
   background: $main-green-light;
   color: #fff;
   display: flex;
+
   .main-logo {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 25px 10%;
     text-transform: uppercase;
+
     h2 {
       display: flex;
       margin: 0;

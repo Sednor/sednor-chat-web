@@ -1,0 +1,68 @@
+.spinner-modal {
+  height: 200px;
+  margin-top: 15vh !important;
+  .modal-content {
+    .modal-body {
+      padding: 30px;
+
+      .loading-spinner {
+        display: flex;
+        justify-content: center;
+        font-size: 2em;
+        -webkit-animation: rotation 2s infinite linear;
+        -moz-animation: rotation 2s infinite linear;
+        -o-animation: rotation 2s infinite linear;
+        animation: rotation 2s infinite linear;
+      }
+
+      .loading-text {
+        display: flex;
+        justify-content: center;
+        margin-top: 3vh;
+        font-size: 1.3em;
+      }
+    }
+
+    .modal-footer {
+      padding: 20px;
+      justify-content: center;
+    }
+
+  }
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+  }
+}
+
+@-o-keyframes rotation {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(359deg);
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

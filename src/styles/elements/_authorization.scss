@@ -1,7 +1,8 @@
 .messenger-sign {
   display: flex;
   justify-content: center;
-  padding: 10vh 0;
+  padding: 8vh 2%;
+
   .messenger-title {
     display: flex;
     justify-content: center;
@@ -43,6 +44,7 @@
         background-color: $main-green-dark;
         width: 50%;
       }
+
       &:after {
         display: inline-flex;
         margin: 17px;
@@ -60,10 +62,12 @@
       justify-content: center;
       margin: 10px 0;
       width: 100%;
+
       i {
         display: flex;
         flex: 0 0 auto;
       }
+
       .text {
         display: flex;
         flex: 1 1 100%;
@@ -81,9 +85,12 @@
   }
 
   .error-input {
-    border: 2px solid #9f0f07;
+    background: rgba(159, 15, 7, 0.2);
+    -webkit-transition: background-color 0.2s ease-in;
+    -moz-transition: background-color 0.2s ease-in;
+    -o-transition: background-color 0.2s ease-in;
+    transition: background-color 0.2s ease-in;
   }
-
 }
 
 
