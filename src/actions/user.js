@@ -19,7 +19,7 @@ export function fetchUserData(userToken) {
         .then(currentUserData => {
           dispatch({
             type: types.RECEIVE_USER_DATA,
-            userData: new User(currentUserData.data)
+            data: new User(currentUserData.data)
           })
         })
         .catch(() => {

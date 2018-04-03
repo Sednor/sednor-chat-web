@@ -36,88 +36,91 @@ class UserLoginForm extends Component {
   };
 
   static defaultProps = {
-    onSuccess: () => {}
+    onSuccess: () => {
+    }
   };
 
   switchSignForm(formType) {
-    this.setState({
-      formType,
-      values: {
-        email: '',
-        firstName: '',
-        lastName: '',
-        password: '',
-        passwordConfirm: ''
-      },
-      errors: {
-        email: false,
-        firstName: false,
-        lastName: false,
-        password: false,
-        passwordConfirm: false
-      }
-    })
+    if (formType !== this.state.formType) {
+      this.setState({
+        formType,
+        values: {
+          email: '',
+          firstName: '',
+          lastName: '',
+          password: '',
+          passwordConfirm: ''
+        },
+        errors: {
+          email: false,
+          firstName: false,
+          lastName: false,
+          password: false,
+          passwordConfirm: false
+        }
+      });
+    }
   }
 
   submitValidation(event) {
     if (event) {
       event.preventDefault();
     }
-    const data = { ...this.state.values };
-    const validationType = this.state.formType;
+    const DATA = { ...this.state.values };
+    const VALIDATION_TYPE = this.state.formType;
 
-    if (getFormDataErrors(data, validationType).length) {
-      const state = this.state;
+    if (getFormDataErrors(DATA, VALIDATION_TYPE).length) {
+      const STATE = this.state;
 
-      getFormDataErrors(data, validationType).forEach(item => {
-        if (validationType === 'signIn') {
+      getFormDataErrors(DATA, VALIDATION_TYPE).forEach(item => {
+        if (VALIDATION_TYPE === 'signIn') {
           switch (item.message) {
             case 'email' :
-              state.errors.email = true;
+              STATE.errors.email = true;
               break;
 
             case 'password' :
-              state.errors.password = true;
+              STATE.errors.password = true;
               break;
           }
         }
 
-        else if (validationType === 'signUp') {
+        else if (VALIDATION_TYPE === 'signUp') {
           switch (item.message) {
             case 'firstName' :
-              state.errors.firstName = true;
+              STATE.errors.firstName = true;
               break;
 
             case 'lastName':
-              state.errors.lastName = true;
+              STATE.errors.lastName = true;
               break;
 
             case 'email' :
-              state.errors.email = true;
+              STATE.errors.email = true;
               break;
 
             case 'password' :
-              state.errors.password = true;
+              STATE.errors.password = true;
               break;
 
             case 'passwordConfirm':
-              state.errors.passwordConfirm = true;
+              STATE.errors.passwordConfirm = true;
               break;
           }
         }
       });
 
-      this.setState({ formType: state.formType, errors: state.errors });
+      this.setState({ formType: STATE.formType, errors: STATE.errors });
     }
     else {
       if (this.state.formType === 'signUp') {
-        const signUpData = { ...data };
+        const signUpData = { ...DATA };
 
         delete signUpData.passwordConfirm;
         this.props.onSuccess(this.state.formType, signUpData);
       }
       else if (this.state.formType === 'signIn') {
-        const signUpData = { ...data };
+        const signUpData = { ...DATA };
 
         delete signUpData.firstName;
         delete signUpData.lastName;
@@ -128,36 +131,36 @@ class UserLoginForm extends Component {
   }
 
   onInputValueChange(value, inputType) {
-    const state = this.state;
+    const STATE = this.state;
 
     switch (inputType) {
       case 'email' :
-        state.values.email = value;
-        state.errors.email = false;
+        STATE.values.email = value;
+        STATE.errors.email = false;
         break;
 
       case 'password' :
-        state.values.password = value;
-        state.errors.password = false;
+        STATE.values.password = value;
+        STATE.errors.password = false;
         break;
 
       case 'passwordConfirm' :
-        state.values.passwordConfirm = value;
-        state.errors.passwordConfirm = false;
+        STATE.values.passwordConfirm = value;
+        STATE.errors.passwordConfirm = false;
         break;
 
       case 'firstName' :
-        state.values.firstName = value;
-        state.errors.firstName = false;
+        STATE.values.firstName = value;
+        STATE.errors.firstName = false;
         break;
 
       case 'lastName' :
-        state.values.lastName = value;
-        state.errors.lastName = false;
+        STATE.values.lastName = value;
+        STATE.errors.lastName = false;
         break;
     }
 
-    this.setState({ values: state.values, errors: state.errors });
+    this.setState({ values: STATE.values, errors: STATE.errors });
   }
 
   render() {

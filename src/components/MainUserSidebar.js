@@ -1,18 +1,20 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import User from '../models/User';
+
 class MainUserSidebar extends Component {
   constructor(props) {
     super(props);
   }
 
   static propTypes = {
-    userData: PropTypes.object,
+    userData: User,
     logout: PropTypes.func
   };
 
   static defaultProps = {
-    userData: {},
+    userData: new User(),
     logout: () => {
     }
   };

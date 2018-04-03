@@ -5,7 +5,7 @@
   flex-direction: column;
   width: 300px;
   height: 100%;
-  padding: 10px 35px;
+  padding: $pagination-padding-y $pagination-padding-x*3;
   overflow: auto;
   background: #13f9d2;
 
@@ -15,6 +15,7 @@
     align-items: center;
     padding: 30px;
     min-height: 70px;
+
     .photo {
       display: flex;
       font-size: 1.5em;
@@ -73,6 +74,7 @@
           color: #bdbdbd;
         }
       }
+
       .create-chat-button {
         display: flex;
         flex: 0 0 auto;

@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as userTokenActions from '../../actions/userData';
+import * as userActions from '../../actions/user';
 
 import MainUserPage from '../MainUserPage/MainUserPage';
 import MainSignPage from '../MainSignPage/MainSignPage';
@@ -20,7 +20,6 @@ class MainHandlePage extends Component {
     };
 
     this.fetchUserToken = this.fetchUserToken.bind(this);
-    this.logout = this.logout.bind(this);
     this.formDataSubmit = this.formDataSubmit.bind(this);
   }
 
@@ -33,12 +32,21 @@ class MainHandlePage extends Component {
     }
   }
 
-  async fetchUserToken(loginType, data) {
-    const TOKEN = await fetchToken(loginType, data);
+  componentWillReceiveProps(nextProps) {
+    if (!Object.keys(nextProps.user.data).length && !nextProps.user.loading) {
+      this.setState({ token: false, tokenLoading: false });
+    }
+  }
 
-    if (TOKEN) {
+  async fetchUserToken(loginType, data) {
+    let token = '';
+    try {
+      token = await fetchToken(loginType, data);
       this.setState({ token: true, tokenLoading: false });
-      this.props.actions.fetchUserData(TOKEN);
+      this.props.actions.fetchUserData(token);
+    }
+    catch (error) {
+      this.setState({ token: false, tokenLoading: false });
     }
   }
 
@@ -47,21 +55,16 @@ class MainHandlePage extends Component {
     this.fetchUserToken(loginType, data);
   }
 
-  logout() {
-    this.setState({ token: false, tokenLoading: false });
-    this.props.actions.abortUserData();
-  }
-
   render() {
     if (this.state.token) {
       return (
-          <MainUserPage logout={this.logout} />
+          <MainUserPage logout={this.props.actions.abortUserData} />
       )
     }
     return (
         <div>
-          <MainSignPage logout={this.logout}
-                        show={this.state.tokenLoading || this.props.userDataStore.loading}
+          <MainSignPage logout={this.props.actions.abortUserData}
+                        show={this.state.tokenLoading || this.props.user.loading}
                         formDataSubmit={this.formDataSubmit} />
         </div>
     )
@@ -70,9 +73,9 @@ class MainHandlePage extends Component {
 
 export default connect(
     state => ({
-      userDataStore: state.userData
+      user: state.user
     }),
     dispatch => ({
-      actions: bindActionCreators({ ...userTokenActions }, dispatch)
+      actions: bindActionCreators({ ...userActions }, dispatch)
     }))
 (MainHandlePage);

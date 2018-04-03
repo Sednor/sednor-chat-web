@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch';
 
-import * as userTokenActions from '../../actions/userData';
+import * as userActions from '../../actions/user';
 
 import MainUserSidebar from '../../components/MainUserSidebar';
 
@@ -25,7 +25,7 @@ class MainUserPage extends Component {
   render() {
     return (
         <div className="messenger-main-page">
-          <MainUserSidebar userData={this.props.userDataStore.userData}
+          <MainUserSidebar userData={this.props.user.data}
                            logout={this.props.logout} />
         </div>
     )
@@ -34,9 +34,9 @@ class MainUserPage extends Component {
 
 export default connect(
     state => ({
-      userDataStore: state.userData
+      user: state.user
     }),
     dispatch => ({
-      actions: bindActionCreators({ ...userTokenActions }, dispatch)
+      actions: bindActionCreators({ ...userActions }, dispatch)
     }))
 (MainUserPage);

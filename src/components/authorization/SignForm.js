@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import { Button, Col, FormGroup, Input, Row } from 'reactstrap';
-import { Animated } from 'react-animated-css';
 import PropTypes from 'prop-types';
 
 class SignForm extends Component {

@@ -1,17 +1,17 @@
 import * as types from '../actions/actionTypes';
 
-const INITIAL_STATE = { userData: {}, loading: false };
+const INITIAL_STATE = { data: {}, loading: false };
 
-export default function userData(state = { ...INITIAL_STATE }, action = {}) {
+export default function user(state = { ...INITIAL_STATE }, action = {}) {
   switch (action.type) {
     case types.REQUEST_USER_DATA:
       return { ...state, loading: true };
 
     case types.RECEIVE_USER_DATA:
-      return { userData: action.userData, loading: false };
+      return { data: action.data, loading: false };
 
     case types.ABORT_USER_DATA:
-      return { userData: {}, loading: false };
+      return { data: {}, loading: false };
 
     default:
       return state;
