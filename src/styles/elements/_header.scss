@@ -1,9 +1,8 @@
 .main-header {
-  font-family: 'Khand';
-  font-weight: bold;
   background: $main-green-light;
   color: #fff;
   display: flex;
+  font-family: $khand;
 
   .main-logo {
     display: flex;
@@ -12,9 +11,10 @@
     padding: 25px 10%;
     text-transform: uppercase;
 
-    h2 {
+    h1 {
       display: flex;
       margin: 0;
+      font-weight: bold;
     }
   }
 }

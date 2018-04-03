@@ -30,7 +30,7 @@ module.exports = Object.assign({}, WEBPACK_CONFIG, {
             }
           },
           {
-            test: /\.(ttf|eot|svg|png|gif)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            test: /\.(ttf|eot|jpe?g|svg|png|gif|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
             use: 'file-loader'
           }
         ]
@@ -63,11 +63,12 @@ module.exports = Object.assign({}, WEBPACK_CONFIG, {
         new HtmlWebpackPlugin({
           filename: `${CONFIG.dest}/index.html`,
           template: `${CONFIG.entry}/index.ejs`,
+          favicon: `${CONFIG.entry}/assets/favicon.ico`,
           minify: {
             removeRedundantAttributes: true,
             removeComments: true,
             minifyCSS: true,
-            collapseWhitespace: true
+            collapseWhitespace: true,
           },
           inject: true
         }),

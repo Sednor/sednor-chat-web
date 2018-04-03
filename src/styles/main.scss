@@ -1,13 +1,14 @@
 $fa-font-path: '~font-awesome/fonts';
 $bootstrap-sass-asset-helper: true;
+$enable-print-styles: false;
 
 @import '~bootstrap/scss/bootstrap';
 @import '~font-awesome/scss/font-awesome';
 @import '~animate.css/animate.css';
 
-@import 'base';
 @import 'variables';
 @import 'fonts';
+@import 'base';
 @import 'elements/header';
 @import 'elements/authorization';
 @import 'elements/spinner-modal';
