@@ -1,12 +1,17 @@
 $fa-font-path: '~font-awesome/fonts';
 $bootstrap-sass-asset-helper: true;
 
-@import 'base';
-@import 'variables';
-@import 'elements/header';
-@import 'elements/authorization';
-@import 'pages/messenger-main-page';
-
 @import '~bootstrap/scss/bootstrap';
 @import '~font-awesome/scss/font-awesome';
 @import '~animate.css/animate.css';
+
+@import 'base';
+@import 'variables';
+@import 'fonts';
+@import 'elements/header';
+@import 'elements/authorization';
+@import 'elements/spinner-modal';
+@import 'elements/main-user-sidebar';
+@import 'pages/messenger-main-page';
+
+

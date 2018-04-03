@@ -1,12 +1,11 @@
-export const validateData = (data, validationType) => {
+export const getFormDataErrors = (data, formType) => {
   const userData = data;
 
   let statusArray = null;
-  if (validationType === 'signIn') {
-    //post
-    statusArray = [];
+  if (formType === 'signIn') {
+    statusArray = [validateEmail(userData.email), validatePassword(userData.password)];
   }
-  if (validationType === 'signUp') {
+  if (formType === 'signUp') {
     statusArray = [validateEmail(userData.email), validateName(userData.firstName, 'firstName'),
       validateName(userData.lastName, 'lastName'), validatePassword(userData.password),
       validatePasswordConfirm(userData.password, userData.passwordConfirm)];
