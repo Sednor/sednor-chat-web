@@ -4,9 +4,9 @@ class Header extends Component {
   render() {
     return <header className="main-header">
       <div className="main-logo">
-        <h2>
+        <h1>
           Sednor
-        </h2>
+        </h1>
       </div>
     </header>
   }
