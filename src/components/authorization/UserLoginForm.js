@@ -1,6 +1,9 @@
 import { Component } from 'react';
 import { Button, Col, Form, FormGroup, Row } from 'reactstrap';
 import PropTypes from 'prop-types';
+import { Animated } from 'react-animated-css';
+import GoogleLogin from 'react-google-login'
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 import SignForm from './SignForm';
 import { getFormDataErrors } from '../../utils/validationUtils';
@@ -163,50 +166,73 @@ class UserLoginForm extends Component {
     this.setState({ values: STATE.values, errors: STATE.errors });
   }
 
+  responseGoogle = (response) => {
+    console.log(response);
+  };
+
+  responseFacebook = (response) => {
+    console.log(response);
+  };
+
   render() {
     return (
-        <Row className="messenger-sign">
-          <Col xs="12" sm="12" md="10" lg="8" xl="4">
-            <h2 className="messenger-title">Sednor Chat</h2>
-            <div className="authorization-form">
-              <Form className="w-100 justify-content-center" onSubmit={this.submitValidation}>
-                <FormGroup className="d-flex flex-row justify-content-center">
-                  <Button outline={this.state.formType === 'signUp'}
-                          color={this.state.formType === 'signIn' ? 'info' : 'secondary'}
-                          className="switch-button"
-                          size="lg"
-                          onClick={() => this.switchSignForm('signIn')}>Sign In</Button>
-                  <Button className="switch-button"
-                          outline={this.state.formType === 'signIn'}
-                          color={this.state.formType === 'signUp' ? 'info' : 'secondary'}
-                          size="lg"
-                          onClick={() => this.switchSignForm('signUp')}>Sign Up</Button>
-                </FormGroup>
+        <Animated animationIn="fadeIn" animationOut="fadeOut">
+          <Row className="messenger-sign">
+            <Col xs="12" sm="12" md="10" lg="8" xl="4">
+              <h2 className="messenger-title">Sednor Chat</h2>
+              <div className="authorization-form">
+                <Form className="w-100 justify-content-center" onSubmit={this.submitValidation}>
+                  <FormGroup className="d-flex flex-row justify-content-center">
+                    <Button outline={this.state.formType === 'signUp'}
+                            color={this.state.formType === 'signIn' ? 'info' : 'secondary'}
+                            className="switch-button"
+                            size="lg"
+                            onClick={() => this.switchSignForm('signIn')}>Sign In</Button>
+                    <Button className="switch-button"
+                            outline={this.state.formType === 'signIn'}
+                            color={this.state.formType === 'signUp' ? 'info' : 'secondary'}
+                            size="lg"
+                            onClick={() => this.switchSignForm('signUp')}>Sign Up</Button>
+                  </FormGroup>
 
-                <SignForm errors={this.state.errors}
-                          values={this.state.values}
-                          formType={this.state.formType}
-                          validate={this.submitValidation}
-                          onInputValueChange={this.onInputValueChange} />
+                  <SignForm errors={this.state.errors}
+                            values={this.state.values}
+                            formType={this.state.formType}
+                            validate={this.submitValidation}
+                            onInputValueChange={this.onInputValueChange} />
 
-                <div className="divider">or</div>
+                  <div className="divider">or</div>
 
-                <FormGroup className="d-flex flex-column justify-content-center">
-                  <Button className="social-network-login-button" size="lg">
-                    <i className="fa fa-google" />
-                    <span className="text">Google</span>
+                  <FormGroup className="d-flex flex-column justify-content-center">
+                    <GoogleLogin
+                        className="social-network-login-button google-button"
+                        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                        onSuccess={this.responseGoogle}
+                        onFailure={this.responseGoogle}>
+                      <i className="fa fa-google" />
+                      <span className="text">Google</span>
+                    </GoogleLogin>
 
-                  </Button>
-                  <Button className="social-network-login-button" color="primary" size="lg">
-                    <i className="fa fa-facebook" />
-                    <span className="text">Facebook</span>
-                  </Button>
-                </FormGroup>
+                    <FacebookLogin
+                        appId="1088597931155576"
+                        autoLoad
+                        callback={this.responseFacebook}
+                        onClick={ev => ev.preventDefault()}
+                        render={renderProps => (
+                            <button className="social-network-login-button facebook-button"
+                                    onClick={renderProps.onClick}>
+                              <i className="fa fa-facebook" />
+                              <span className="text">Facebook</span>
+                            </button>
+                        )}
+                    />
+                  </FormGroup>
 
-              </Form>
-            </div>
-          </Col>
-        </Row>
+                </Form>
+              </div>
+            </Col>
+          </Row>
+        </Animated>
     )
   }
 }

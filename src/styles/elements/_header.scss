@@ -2,7 +2,8 @@
   background: $main-green-light;
   color: #fff;
   display: flex;
-  font-family: $khand;
+  font-family: $khand, sans-serif;
+  @include scale-100;
 
   .main-logo {
     display: flex;
@@ -15,6 +16,15 @@
       display: flex;
       margin: 0;
       font-weight: bold;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
     }
   }
 }

@@ -1,0 +1,10 @@
+{
+  "lang": "en",
+  "name": "Sednor Chat",
+  "short_name": "Sednor",
+  "theme_color": "#3eb396",
+  "background_color": "#3eb396",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "natural"
+}

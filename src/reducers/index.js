@@ -1,5 +1,15 @@
-import user from './user';
+import currentUser from './currentUser';
+import modals from './modals';
+import users from './users';
+import webSocket from './webSocket';
+import chats from './chats';
+import notifications from './notifications';
 
 export default {
-  user
+  currentUser,
+  modals,
+  users,
+  webSocket,
+  chats,
+  notifications
 }
