@@ -1,16 +1,16 @@
-import * as types from '../actions/actionTypes';
+import { ACTIONS } from '../actions/actionTypes';
 
 const INITIAL_STATE = { data: {}, loading: false };
 
-export default function user(state = { ...INITIAL_STATE }, action = {}) {
+export default function currentUser(state = { ...INITIAL_STATE }, action = {}) {
   switch (action.type) {
-    case types.REQUEST_USER_DATA:
+    case ACTIONS.REQUEST_USER_DATA:
       return { ...state, loading: true };
 
-    case types.RECEIVE_USER_DATA:
+    case ACTIONS.RECEIVE_USER_DATA:
       return { data: action.data, loading: false };
 
-    case types.ABORT_USER_DATA:
+    case ACTIONS.ABORT_USER_DATA:
       return { data: {}, loading: false };
 
     default:

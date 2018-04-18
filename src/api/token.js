@@ -1,13 +1,12 @@
-import axios from 'axios';
-
 import { setToken } from '../utils/tokenUtils';
 
 import { URL } from '../config';
+import api from './api';
 
 export function fetchToken(loginType, data) {
   return new Promise((resolve, reject) => {
     if (loginType === 'signIn') {
-      return axios.post(URL.signIn, {
+      api.post(URL.auth.signIn, {
         email: data.email,
         password: data.password
       })
@@ -18,23 +17,22 @@ export function fetchToken(loginType, data) {
             resolve(jwToken);
           })
           .catch(error => {
-            reject(error);
+            reject(new Error(error.response.data.error.message));
           })
     }
 
     if (loginType === 'signUp') {
-      return axios.post(URL.signUp, {
+      api.post(URL.auth.signUp, {
         email: data.email,
         password: data.password,
         firstName: data.firstName,
         lastName: data.lastName
       })
           .then(res => {
-            //change later
-            resolve(fetchToken('signIn', data));
+            resolve(res.status);
           })
           .catch(error => {
-            reject(error);
+            reject(new Error(error.response.data.error.message));
           })
     }
   });

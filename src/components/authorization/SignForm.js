@@ -61,14 +61,14 @@ class SignForm extends Component {
             this.props.formType === 'signUp' &&
             <FormGroup>
               <Row>
-                <Col md="6" sm="12" xs="12" className="mt-md-0 mt-sm-2">
+                <Col md="6" sm="12" xs="12" className="pr-lg-3 pr-md-3 pr-0 pl-0 mt-2 mt-md-0 mt-lg-0">
                   <Input onChange={event => this.onInputValueChange(event.target.value, 'firstName')}
                          value={this.props.values.firstName}
                          className={this.props.errors.firstName ? 'error-input' : ''}
                          type="text"
                          placeholder="First name" />
                 </Col>
-                <Col md="6" sm="12" xs="12" className="mt-md-0 mt-sm-2">
+                <Col md="6" sm="12" xs="12" className="p-0 mt-md-0 mt-2 mt-md-0 mt-lg-0">
                   <Input onChange={event => this.onInputValueChange(event.target.value, 'lastName')}
                          value={this.props.values.lastName}
                          className={this.props.errors.lastName ? 'error-input' : ''}
@@ -105,7 +105,6 @@ class SignForm extends Component {
             this.props.formType === 'signIn' ? 'Sign In' : 'Sign Up'
           }</Button>
         </div>
-
     )
   }
 }

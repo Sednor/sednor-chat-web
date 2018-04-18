@@ -1,0 +1,38 @@
+.create-chat-modal {
+  margin: $modal-dialog-margin*10 auto;
+  z-index: 5;
+  height: 25rem;
+  overflow: auto;
+
+  .modal-exit {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    height: 3rem;
+    width: 4rem;
+    font-size: .8rem;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.5rem;
+    border-radius: 20px;
+    z-index: 5;
+
+    &:hover {
+      background: rgba(89, 197, 139, 0.5);
+    }
+
+    .close-icon {
+      width: 100%;
+      font-size: 2em;
+    }
+  }
+
+  .modal-content {
+    border: none;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0;
+    padding: 3rem;
+
+  }
+}

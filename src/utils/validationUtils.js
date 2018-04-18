@@ -1,4 +1,4 @@
-export const getFormDataErrors = (data, formType) => {
+export function getFormDataErrors(data, formType) {
   const userData = data;
 
   let statusArray = null;
@@ -16,9 +16,9 @@ export const getFormDataErrors = (data, formType) => {
       return item;
     }
   });
-};
+}
 
-export const validatePassword = data => {
+export function validatePassword(data) {
   if (!data || !data.length) {
     return new Error('password')
   }
@@ -32,9 +32,9 @@ export const validatePassword = data => {
       return true;
     }
   }
-};
+}
 
-export const validatePasswordConfirm = (password, passwordToConfirm) => {
+export function validatePasswordConfirm(password, passwordToConfirm) {
   if (!password || !passwordToConfirm || !password.length || !passwordToConfirm.length) {
     return new Error('passwordConfirm');
   }
@@ -44,9 +44,9 @@ export const validatePasswordConfirm = (password, passwordToConfirm) => {
   else {
     return true;
   }
-};
+}
 
-export const validateEmail = data => {
+export function validateEmail(data) {
   if (!data || !data.length) {
     return new Error('email')
   }
@@ -60,10 +60,9 @@ export const validateEmail = data => {
       return new Error('email');
     }
   }
+}
 
-};
-
-export const validateName = (data, type) => {
+export function validateName(data, type) {
   if (!data || !data.length) {
     return new Error(type);
   }
@@ -77,6 +76,6 @@ export const validateName = (data, type) => {
       return true;
     }
   }
-};
+}
 
 

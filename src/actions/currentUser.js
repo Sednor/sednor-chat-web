@@ -1,31 +1,27 @@
-import * as types from './actionTypes';
-import axios from 'axios';
+import { ACTIONS } from './actionTypes';
 
 import { deleteToken } from '../utils/tokenUtils';
 
+import api from '../api/api';
+
 import { URL } from '../config';
+
 import User from '../models/User';
 
-export function fetchUserData(userToken) {
+export function fetchUserData() {
   return dispatch => {
     dispatch({
-      type: types.REQUEST_USER_DATA
+      type: ACTIONS.REQUEST_USER_DATA
     });
-    axios.get(URL.currentUser, {
-      headers: {
-        'Authorization': userToken
-      }
-    })
+    api.get(URL.auth.currentUser)
         .then(currentUserData => {
           dispatch({
-            type: types.RECEIVE_USER_DATA,
+            type: ACTIONS.RECEIVE_USER_DATA,
             data: new User(currentUserData.data)
           })
         })
         .catch(() => {
-          dispatch({
-            type: types.ABORT_USER_DATA
-          })
+          dispatch(abortUserData());
         })
 
   };
@@ -35,6 +31,6 @@ export function abortUserData() {
   return dispatch => {
     //abort axios
     deleteToken();
-    dispatch({ type: types.ABORT_USER_DATA });
+    dispatch({ type: ACTIONS.ABORT_USER_DATA });
   };
 }
