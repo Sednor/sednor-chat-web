@@ -1,0 +1,117 @@
+.messenger-sign {
+  font-family: $raleway, 'sans-serif';
+  display: flex;
+  justify-content: center;
+  padding: $pagination-padding-x-lg * 4 2%;
+
+  .messenger-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $headings-margin-bottom*3;
+    font-size: 2.5em;
+    text-transform: uppercase;
+  }
+
+  .authorization-form {
+    display: flex;
+    justify-content: center;
+
+    .switch-button {
+      margin: 0 1%;
+      width: 100%;
+    }
+
+    .submit-button {
+      width: 100%;
+      background: $main-green-light;
+      border: none;
+      &:hover {
+        background: $main-green-dark;
+      }
+    }
+
+    .divider {
+      margin: $form-check-input-margin-y*3 0;
+      font-size: 1.5em;
+      display: flex;
+      justify-content: center;
+      z-index: 1;
+
+      &:before {
+        display: inline-flex;
+        margin: 20px;
+        height: 2px;
+        content: " ";
+        text-shadow: none;
+        background-color: $main-green-dark;
+        width: 50%;
+      }
+
+      &:after {
+        display: inline-flex;
+        margin: 20px;
+        height: 2px;
+        content: " ";
+        text-shadow: none;
+        background-color: $main-green-dark;
+        width: 50%;
+      }
+    }
+
+    .google-button {
+      color: #fff;
+      background: rgb(209, 72, 54);
+
+      &:hover {
+        background: rgb(187, 66, 48);
+      }
+    }
+
+    .facebook-button {
+      color: #fff;
+      background: #4c69ba;
+
+      &:hover {
+        background: #425097;
+      }
+    }
+
+    .social-network-login-button {
+      &:not(:first-child) {
+        margin: $form-group-margin-bottom 0;
+      }
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+      font-size: 1.25rem;
+      line-height: 1.5;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+
+      i {
+        display: flex;
+        flex: 0 0 auto;
+      }
+
+      .text {
+        display: flex;
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  .error-input {
+    background: rgba(159, 15, 7, 0.2) !important;
+    -webkit-transition: background-color 0.2s ease-in;
+    -moz-transition: background-color 0.2s ease-in;
+    -o-transition: background-color 0.2s ease-in;
+    transition: background-color 0.2s ease-in;
+  }
+}
+
+
+

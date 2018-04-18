@@ -1,0 +1,32 @@
+$fa-font-path: '~font-awesome/fonts';
+$bootstrap-sass-asset-helper: true;
+$enable-print-styles: false;
+$react-notifications-font-base-path: '~react-notifications/lib/fonts';
+
+@import "~bootstrap/scss/bootstrap";
+@import '~font-awesome/scss/font-awesome';
+@import '~animate.css/animate.css';
+@import '~react-notifications/src/notifications';
+@import '~react-grid-layout/css/styles';
+
+@import '~react-select/scss/select';
+@import '~react-select/scss/default';
+@import '~react-select/scss/components';
+
+@import 'mixins';
+@import 'variables';
+@import 'fonts';
+@import 'base';
+
+@import 'pages/messenger-main-page';
+
+@import 'elements/header';
+@import 'elements/authorization';
+@import 'elements/spinner-modal';
+@import 'elements/create-chat-modal';
+@import 'elements/main-user-sidebar';
+@import 'elements/chat';
+
+
+
+

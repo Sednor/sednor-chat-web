@@ -1,0 +1,38 @@
+.spinner-modal {
+  height: 200px;
+  margin-top: 15vh !important;
+
+  .modal-content {
+    .modal-body {
+      padding: 30px;
+
+      .loading-spinner {
+        display: flex;
+        justify-content: center;
+        font-size: 2em;
+        animation: rotation 2s infinite linear;
+      }
+
+      .loading-text {
+        display: flex;
+        justify-content: center;
+        margin-top: 3vh;
+        font-size: 1.3em;
+      }
+    }
+
+    .modal-footer {
+      padding: 20px;
+      justify-content: center;
+    }
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
