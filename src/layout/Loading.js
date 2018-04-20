@@ -51,6 +51,7 @@ class Loading extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.currentUser.data.id && !nextProps.chats.loading && !nextProps.users.loading && nextProps.webSocket.socket) {
+      this.props.webSocket.socket.emit('connection');
       this.props.actions.subscribeToWebSocketMessages(nextProps.webSocket.socket);
       this.props.history.push('/');
     }

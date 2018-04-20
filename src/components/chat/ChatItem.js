@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Input } from 'reactstrap';
-import { compose } from 'redux';
-import { DragSource, DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
 
 import { getFullUserName } from '../../utils/userUtils';
 
 import { getShortTimestamp } from '../../utils/timestampUtils';
 
-import { ITEM_TYPES } from '../../common/drag-n-drop/itemTypes';
-import { chatSource, chatSourceCollect } from '../../common/drag-n-drop/chat/source';
-import { chatTarget, chatTargetCollect } from '../../common/drag-n-drop/chat/target';
-
 import Chat from '../../models/Chat';
+import Message from '../../models/Message';
 
 class ChatItem extends Component {
   constructor(props) {
@@ -23,8 +18,26 @@ class ChatItem extends Component {
     this.messageSubmit = this.messageSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.props.socket.on('message', data => {
+      if (data.room === this.props.chat.id) {
+        this.props.addMessage(this.props.chat, data.payload);
+        // if (!this.props.chatsData.active.find(chat => chat.id === this.props.chat.id)) {
+        this.props.createNotification('Message',
+            `${getFullUserName(this.props.users.find(user => user.id === data.payload.author))} ${moment(data.payload.timeStamp).format('LT')}`,
+            {
+              body: data.payload.payload,
+              tag: data.payload.timeStamp,
+              lang: 'en',
+              dir: 'ltr'
+            });
+        //   }
+      }
+    });
+  }
+
   static propTypes = {
-    data: PropTypes.object,
+    chat: PropTypes.object,
     closeChat: PropTypes.func,
     users: PropTypes.array,
     moveChat: PropTypes.func,
@@ -32,7 +45,7 @@ class ChatItem extends Component {
   };
 
   static defaultProps = {
-    data: new Chat(),
+    chat: new Chat(),
     closeChat: () => {
     },
     users: [],
@@ -45,32 +58,39 @@ class ChatItem extends Component {
     if (event) {
       event.preventDefault();
     }
-    const { message } = this.state;
+    if (this.state.message) {
+      const MESSAGE = new Message({
+        timestamp: Date.now(),
+        payload: this.state.message,
+        author: this.props.currentUser.id
+      });
 
-    if (message) {
       this.setState({ message: '' });
-      this.props.addMessage(this.props.data, message);
+      this.props.socket.emit('message', {
+        room: this.props.chat.id,
+        payload: MESSAGE
+      });
+      this.props.addMessage(this.props.chat, MESSAGE);
     }
-
   }
 
   render() {
     return <div className="chat-content">
       <div className="chat-header">
         <h4 className="chat-name">
-          {this.props.data.name}
+          {this.props.chat.name}
         </h4>
         <div className="chat-header-control">
           <i className="fa fa-phone" />
           <i className="fa fa-video-camera" />
-          <i onClick={() => this.props.closeChat(this.props.data)} className="chat-close-icon fa fa-times" />
+          <i onClick={() => this.props.closeChat(this.props.chat)} className="chat-close-icon fa fa-times" />
         </div>
       </div>
       <div className="chat-body">
         {
-          this.props.data.messages.map((message, index) => {
-            if (this.props.data.messages[index - 1]) {
-              if (this.props.data.messages[index - 1].author !== message.author) {
+          this.props.chat.messages.map((message, index) => {
+            if (this.props.chat.messages[index - 1]) {
+              if (this.props.chat.messages[index - 1].author !== message.author) {
                 return (
                     <div className="message full-message">
                       <div className="message-author">

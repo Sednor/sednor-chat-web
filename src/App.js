@@ -37,6 +37,10 @@ class App extends Component {
     this.props.actions.disableNotifications();
   }
 
+  handleNotificationOnClick(e, tag){
+    console.log(e, 'Notification clicked tag:' + tag);
+  }
+
   render() {
     return <div className="app">
       <Switch>
@@ -49,6 +53,7 @@ class App extends Component {
           notSupported={::this.handleNotSupported}
           onPermissionGranted={::this.handlePermissionGranted}
           onPermissionDenied={::this.handlePermissionDenied}
+          onClick={::this.handleNotificationOnClick}
           timeout={5000}
           title={this.props.notifications.title}
           options={this.props.notifications.options}

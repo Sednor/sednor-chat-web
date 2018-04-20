@@ -24,7 +24,7 @@ class MainUserPage extends Component {
     super(props);
     this.state = {
       activeChats: [],
-      chatPosition: null
+      chatPosition: 0
     };
     this.createUserchat = this.createUserchat.bind(this);
     this.openUserChat = this.openUserChat.bind(this);
@@ -32,6 +32,7 @@ class MainUserPage extends Component {
     this.logout = this.logout.bind(this);
     this.findUserById = this.findUserById.bind(this);
     this.closeUserChat = this.closeUserChat.bind(this);
+    this._socket = null;
   }
 
   static propTypes = {
@@ -55,7 +56,11 @@ class MainUserPage extends Component {
 
     CHAT_MEMBERS.push(this.props.currentUser.data);
     this.props.actions.closeChatModal();
-    const CHAT = this.props.chats.all.find(chat => chat.users.every(user => CHAT_MEMBERS.find(item => item.id === user.id)));
+    const CHAT = this.props.chats.all.find(chat => {
+      if (chat.users.length === CHAT_MEMBERS.length && chat.users.every(user => CHAT_MEMBERS.find(item => item.id === user.id))) {
+        return chat;
+      }
+    });
 
     if (this.state.activeChats.length === 6) {
       this.props.actions.createNotification('warning', 'Too many chats opened!', {
@@ -74,6 +79,7 @@ class MainUserPage extends Component {
       else {
         this.props.actions.createChat(CHAT_MEMBERS);
       }
+      this.props.webSocket.socket.emit('create-chat', { room: chat.id });
       this.setState((prevState, props) => ({
         positionCounter: prevState.positionCounter < 6 ? prevState.positionCounter + 1 : 0
       }));
@@ -99,6 +105,8 @@ class MainUserPage extends Component {
       });
       this.props.actions.openChat({ ...chat, position: POSITION });
     }
+
+    this.props.webSocket.socket.emit('create-chat', { room: chat.id });
   }
 
   closeUserChat(chat) {
@@ -116,12 +124,7 @@ class MainUserPage extends Component {
   addChatMessage(chat, message) {
     const CHAT_TO_UPDATE = { ...chat };
 
-    CHAT_TO_UPDATE.messages.push(new Message({
-      id: Math.random(),
-      timestamp: Date.now(),
-      payload: message,
-      author: this.props.currentUser.data.id
-    }));
+    CHAT_TO_UPDATE.messages.push(message);
     this.props.actions.updateChat(CHAT_TO_UPDATE);
   }
 
@@ -168,11 +171,15 @@ class MainUserPage extends Component {
                 className="chat"
                 key={index}
                 data-grid={{ i: index.toString(), ...ITEM_LAYOUT }}>
-              <ChatItem addMessage={this.addChatMessage}
+              <ChatItem chat={chat}
+                        chatsData={this.props.chats}
+                        addMessage={this.addChatMessage}
                         closeChat={this.closeUserChat}
                         users={this.props.users.data}
+                        currentUser={this.props.currentUser.data}
                         index={index}
-                        data={chat} />
+                        createNotification={this.props.actions.createNotification}
+                        socket={this.props.webSocket.socket} />
             </div>)
             }
 
@@ -192,7 +199,8 @@ export default compose(connect(
       currentUser: state.currentUser,
       modals: state.modals,
       users: state.users,
-      chats: state.chats
+      chats: state.chats,
+      webSocket: state.webSocket
     }),
     dispatch => ({
       actions: bindActionCreators({ ...currentUser, ...modalsActions, ...usersActions, ...chatActions, ...notificationActions }, dispatch)
