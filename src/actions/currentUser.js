@@ -8,6 +8,13 @@ import { URL } from '../config';
 
 import User from '../models/User';
 
+export function abortUserData() {
+  return dispatch => {
+    deleteToken();
+    dispatch({ type: ACTIONS.ABORT_USER_DATA });
+  };
+}
+
 export function fetchUserData() {
   return dispatch => {
     dispatch({
@@ -18,19 +25,11 @@ export function fetchUserData() {
           dispatch({
             type: ACTIONS.RECEIVE_USER_DATA,
             data: new User(currentUserData.data)
-          })
+          });
         })
         .catch(() => {
           dispatch(abortUserData());
-        })
-
+        });
   };
 }
 
-export function abortUserData() {
-  return dispatch => {
-    //abort axios
-    deleteToken();
-    dispatch({ type: ACTIONS.ABORT_USER_DATA });
-  };
-}

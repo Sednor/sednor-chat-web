@@ -15,7 +15,7 @@ export default function chats(state = { ...INITIAL_STATE }, action = {}) {
 
       NEW_STATE.all.push(action.data);
       NEW_STATE.active.push(action.data);
-      return {...state, NEW_STATE};
+      return { ...state, ...NEW_STATE };
     }
 
     case ACTIONS.UPDATE_CHAT: {
@@ -25,21 +25,21 @@ export default function chats(state = { ...INITIAL_STATE }, action = {}) {
 
       NEW_STATE.all[COMMON_INDEX] = action.data;
       NEW_STATE.active[ACTIVE_INDEX] = action.data;
-      return {...state, ...NEW_STATE};
+      return { ...state, ...NEW_STATE };
     }
 
     case ACTIONS.OPEN_CHAT: {
       const NEW_STATE = { ...state };
 
       NEW_STATE.active.push(action.data);
-      return {...state, ...NEW_STATE};
+      return { ...state, ...NEW_STATE };
     }
 
     case ACTIONS.CLOSE_CHAT: {
       const NEW_STATE = { ...state };
 
       NEW_STATE.active.splice(NEW_STATE.active.indexOf(action.data), 1);
-      return {...state, ...NEW_STATE};
+      return { ...state, ...NEW_STATE };
     }
 
     default:

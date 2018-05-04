@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
-import { Animated } from 'react-animated-css';
 import PropTypes from 'prop-types';
 
 class SpinnerModal extends Component {
@@ -23,7 +22,7 @@ class SpinnerModal extends Component {
     return (
         <Modal className="spinner-modal" isOpen={this.props.show}>
           <ModalBody>
-            <i className="loading-spinner fa fa-spinner" />
+            <i className="loading-spinner fa fa-spinner"/>
             <div className="loading-text">
               Loading
             </div>
@@ -32,7 +31,7 @@ class SpinnerModal extends Component {
             <Button onClick={this.props.abortRequest} color="secondary">Cancel</Button>
           </ModalFooter>
         </Modal>
-    )
+    );
   }
 }
 

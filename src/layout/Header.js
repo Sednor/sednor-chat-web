@@ -9,7 +9,7 @@ class Header extends Component {
           <Link to={'/'}>Sednor</Link>
         </h1>
       </div>
-    </header>
+    </header>;
   }
 }
 

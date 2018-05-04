@@ -126,6 +126,20 @@
       justify-content: center;
       background: #fff;
 
+      .msg-input {
+        width: 100%;
+
+        .msg-input-value {
+          display: flex;
+          align-items: center;
+
+          .emoji-image {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
       .new-file-icon {
         width: 2.6rem;
         height: 2.4rem;

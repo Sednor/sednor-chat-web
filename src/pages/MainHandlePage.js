@@ -24,26 +24,23 @@ class MainHandlePage extends Component {
 
     if (TOKEN && TOKEN !== 'undefined') {
       this.setState({ authorized: true });
-    }
-    else {
+    } else {
       this.setState({ authorized: false });
     }
   }
 
   render() {
     if (this.state.authorized && this.props.currentUser.data.id) {
-      return <MainUserPage history={this.props.history} />
+      return <MainUserPage history={this.props.history}/>;
     }
     if (this.state.authorized && !this.props.currentUser.data.id) {
-      return <Redirect to="/loading" />
+      return <Redirect to="/loading"/>;
     }
-    return <Redirect to="/login" />
+    return <Redirect to="/login"/>;
   }
 }
 
 export default connect(
     state => ({
       currentUser: state.currentUser
-    }),
-    dispatch => ({}))
-(MainHandlePage);
+    }))(MainHandlePage);

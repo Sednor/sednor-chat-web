@@ -1,14 +1,12 @@
-import {getToken} from '../utils/tokenUtils';
-
 export const DOMAIN = 'https://sednor-chat-server.herokuapp.com';
 export const API_PREFIX = `${DOMAIN}/api/v1`;
 
 export const URL = {
-  webSocket: {DOMAIN},
+  webSocket: { DOMAIN },
   auth: {
     signIn: `${API_PREFIX}/auth/signin`,
     signUp: `${API_PREFIX}/auth/signup`,
-    currentUser: `${API_PREFIX}/auth/current`,
+    currentUser: `${API_PREFIX}/auth/current`
   },
   users: `${API_PREFIX}/user/index`,
   chats: {

@@ -78,7 +78,7 @@ class ChatModal extends Component {
             </ModalBody>
           </Form>
         </Modal>
-    )
+    );
   }
 }
 

@@ -4,12 +4,13 @@ import cancel from '../assets/icons/cancel.png';
 import success from '../assets/icons/checked.png';
 import warning from '../assets/icons/warning.png';
 
-export function createNotification(type, title, options) {
+import Notification from '../models/Notification';
+
+export function createNotification(notification) {
   return dispatch => {
     let icon = null;
-    const OPTIONS = options;
 
-    switch (type) {
+    switch (notification.type) {
       case 'success':
         icon = success;
         break;
@@ -22,11 +23,17 @@ export function createNotification(type, title, options) {
         icon = warning;
         break;
     }
-
-    OPTIONS.icon = icon;
     dispatch({
       type: ACTIONS.CREATE_NOTIFICATION,
-      data: { title, options: OPTIONS }
+      data: new Notification({ ...notification, icon })
+    });
+  };
+}
+
+export function closeNotification() {
+  return dispatch => {
+    dispatch({
+      type: ACTIONS.CLOSE_NOTIFICATION
     });
   };
 }
@@ -35,7 +42,7 @@ export function enableNotifications() {
   return dispatch => {
     dispatch({
       type: ACTIONS.ENABLE_NOTIFICATIONS
-    })
+    });
   };
 }
 
@@ -43,6 +50,6 @@ export function disableNotifications() {
   return dispatch => {
     dispatch({
       type: ACTIONS.DISABLE_NOTIFICATIONS
-    })
+    });
   };
 }

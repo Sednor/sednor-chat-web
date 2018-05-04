@@ -2,10 +2,9 @@ import { Component } from 'react';
 import { Button, Col, Form, FormGroup, Row } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { Animated } from 'react-animated-css';
-import GoogleLogin from 'react-google-login'
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 import SignForm from './SignForm';
+
 import { getFormDataErrors } from '../../utils/validationUtils';
 
 class UserLoginForm extends Component {
@@ -86,9 +85,7 @@ class UserLoginForm extends Component {
               STATE.errors.password = true;
               break;
           }
-        }
-
-        else if (VALIDATION_TYPE === 'signUp') {
+        } else if (VALIDATION_TYPE === 'signUp') {
           switch (item.message) {
             case 'firstName' :
               STATE.errors.firstName = true;
@@ -114,15 +111,13 @@ class UserLoginForm extends Component {
       });
 
       this.setState({ formType: STATE.formType, errors: STATE.errors });
-    }
-    else {
+    } else {
       if (this.state.formType === 'signUp') {
         const signUpData = { ...DATA };
 
         delete signUpData.passwordConfirm;
         this.props.onSuccess(this.state.formType, signUpData);
-      }
-      else if (this.state.formType === 'signIn') {
+      } else if (this.state.formType === 'signIn') {
         const signUpData = { ...DATA };
 
         delete signUpData.firstName;
@@ -166,14 +161,6 @@ class UserLoginForm extends Component {
     this.setState({ values: STATE.values, errors: STATE.errors });
   }
 
-  responseGoogle = (response) => {
-    console.log(response);
-  };
-
-  responseFacebook = (response) => {
-    console.log(response);
-  };
-
   render() {
     return (
         <Animated animationIn="fadeIn" animationOut="fadeOut">
@@ -199,41 +186,20 @@ class UserLoginForm extends Component {
                             values={this.state.values}
                             formType={this.state.formType}
                             validate={this.submitValidation}
-                            onInputValueChange={this.onInputValueChange} />
+                            onInputValueChange={this.onInputValueChange}/>
 
                   <div className="divider">or</div>
 
                   <FormGroup className="d-flex flex-column justify-content-center">
-                    <GoogleLogin
-                        className="social-network-login-button google-button"
-                        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                        onSuccess={this.responseGoogle}
-                        onFailure={this.responseGoogle}>
-                      <i className="fa fa-google" />
-                      <span className="text">Google</span>
-                    </GoogleLogin>
-
-                    <FacebookLogin
-                        appId="1088597931155576"
-                        autoLoad
-                        callback={this.responseFacebook}
-                        onClick={ev => ev.preventDefault()}
-                        render={renderProps => (
-                            <button className="social-network-login-button facebook-button"
-                                    onClick={renderProps.onClick}>
-                              <i className="fa fa-facebook" />
-                              <span className="text">Facebook</span>
-                            </button>
-                        )}
-                    />
+                    <Button size="lg" className="social-network-login-button facebook-button">Facebook</Button>
+                    <Button size="lg" className="social-network-login-button google-button">Google</Button>
                   </FormGroup>
-
                 </Form>
               </div>
             </Col>
           </Row>
         </Animated>
-    )
+    );
   }
 }
 

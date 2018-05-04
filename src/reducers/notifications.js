@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     body: '',
     icon: null,
     lang: 'en',
-    sound: '' //not supported yet
+    dir: 'ltr'
   }
 };
 
@@ -20,6 +20,18 @@ export default function notifications(state = { ...INITIAL_STATE }, action = {})
 
     case ACTIONS.CREATE_NOTIFICATION:
       return { ...state, ...action.data };
+
+    case ACTIONS.CLOSE_NOTIFICATION:
+      return {
+        ...state, title: '', timeOut: 0, options: {
+          tag: '',
+          body: '',
+          icon: null,
+          lang: 'en',
+          dir: 'ltr'
+        }
+      };
+
     default:
       return state;
   }

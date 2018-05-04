@@ -18,7 +18,7 @@ export function fetchToken(loginType, data) {
           })
           .catch(error => {
             reject(new Error(error.response.data.error.message));
-          })
+          });
     }
 
     if (loginType === 'signUp') {
@@ -33,7 +33,7 @@ export function fetchToken(loginType, data) {
           })
           .catch(error => {
             reject(new Error(error.response.data.error.message));
-          })
+          });
     }
   });
 }

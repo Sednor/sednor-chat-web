@@ -6,6 +6,11 @@ html, body, #app {
   font-family: $raleway, sans-serif;
 }
 
+p, ul, ol, li, div {
+  margin: 0;
+  padding: 0;
+}
+
 .row {
   margin: 0;
 }

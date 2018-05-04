@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Input } from 'reactstrap';
 import PropTypes from 'prop-types';
+import { Animated } from 'react-animated-css';
 
 import { getFullUserName } from '../../utils/userUtils';
 
@@ -16,24 +17,6 @@ class ChatItem extends Component {
       message: ''
     };
     this.messageSubmit = this.messageSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.socket.on('message', data => {
-      if (data.room === this.props.chat.id) {
-        this.props.addMessage(this.props.chat, data.payload);
-        // if (!this.props.chatsData.active.find(chat => chat.id === this.props.chat.id)) {
-        this.props.createNotification('Message',
-            `${getFullUserName(this.props.users.find(user => user.id === data.payload.author))} ${moment(data.payload.timeStamp).format('LT')}`,
-            {
-              body: data.payload.payload,
-              tag: data.payload.timeStamp,
-              lang: 'en',
-              dir: 'ltr'
-            });
-        //   }
-      }
-    });
   }
 
   static propTypes = {
@@ -75,15 +58,15 @@ class ChatItem extends Component {
   }
 
   render() {
-    return <div className="chat-content">
+    return <Animated animationIn="zoomIn" animationOut="fadeOut" className="chat-content">
       <div className="chat-header">
         <h4 className="chat-name">
-          {this.props.chat.name}
+          { this.props.chat.name }
         </h4>
         <div className="chat-header-control">
-          <i className="fa fa-phone" />
-          <i className="fa fa-video-camera" />
-          <i onClick={() => this.props.closeChat(this.props.chat)} className="chat-close-icon fa fa-times" />
+          <i className="fa fa-phone"/>
+          <i className="fa fa-video-camera"/>
+          <i onClick={ () => this.props.closeChat(this.props.chat) } className="chat-close-icon fa fa-times"/>
         </div>
       </div>
       <div className="chat-body">
@@ -92,47 +75,45 @@ class ChatItem extends Component {
             if (this.props.chat.messages[index - 1]) {
               if (this.props.chat.messages[index - 1].author !== message.author) {
                 return (
-                    <div className="message full-message">
-                      <div className="message-author">
-                        <div className="message-author-photo">
-                          {
-                            this.props.users.find(user => user.id === message.author).firstName[0]
-                          }
-                        </div>
-                        <span className="message-author-name">
-                               {getFullUserName(this.props.users.find(user => user.id === message.author))}
-                            </span>
-                        <span className="message-timestamp">
-                  {getShortTimestamp(message.timestamp)}
-                </span>
+                  <div className="message full-message" key={ Math.random() }>
+                    <div className="message-author">
+                      <div className="message-author-photo">
+                        {
+                          this.props.users.find(user => user.id === message.author).firstName[0]
+                        }
                       </div>
-                      <div className="message-body">
-                        <div className="pl-5 message-body-text">
-                          {
-                            message.payload
-                          }
-                        </div>
+                      <span className="message-author-name">
+                               { getFullUserName(this.props.users.find(user => user.id === message.author)) }
+                            </span>
+                      <span className="message-timestamp">
+                  { getShortTimestamp(message.timestamp) }
+                </span>
+                    </div>
+                    <div className="message-body">
+                      <div className="pl-5 message-body-text">
+                        {
+                          message.payload.slice()
+                        }
                       </div>
                     </div>
-                )
-              }
-              else {
-                return <div className="message">
+                  </div>
+                );
+              } else {
+                return <div className="message" key={ Math.random() }>
                   <div className="message-body">
                         <span className="message-timestamp">
-                  {getShortTimestamp(message.timestamp)}
+                  { getShortTimestamp(message.timestamp) }
                 </span>
                     <div className="message-body-text">
                       {
-                        message.payload
+                        message.payload.slice()
                       }
                     </div>
                   </div>
-                </div>
+                </div>;
               }
-            }
-            else {
-              return <div className="message full-message">
+            } else {
+              return <div className="message full-message" key={ Math.random() }>
                 <div className="message-author">
                   <div className="message-author-photo">
                     {
@@ -140,34 +121,32 @@ class ChatItem extends Component {
                     }
                   </div>
                   <span className="message-author-name">
-                               {getFullUserName(this.props.users.find(user => user.id === message.author))}
+                               { getFullUserName(this.props.users.find(user => user.id === message.author)) }
                             </span>
                   <span className="message-timestamp">
-                  {getShortTimestamp(message.timestamp)}
+                  { getShortTimestamp(message.timestamp) }
                 </span>
                 </div>
                 <div className="message-body">
                   <div className="pl-5 message-body-text">
                     {
-                      message.payload
+                      message.payload.slice()
                     }
                   </div>
                 </div>
-              </div>
+              </div>;
             }
           })
         }
       </div>
-      <Form onSubmit={this.messageSubmit} className="chat-form">
+      <Form onSubmit={ this.messageSubmit } className="chat-form">
         <FormGroup className="d-flex w-100 m-0 align-items-center">
-          <i className="new-file-icon fa fa-plus" />
-          <Input value={this.state.message} onChange={ev => this.setState({ message: ev.target.value })}
-                 className="chat-input"
-                 placeholder="Message..." />
-          <i onClick={this.messageSubmit} className="send-message-icon fa fa-paper-plane" />
+          <i className="new-file-icon fa fa-plus"/>
+          <Input value={ this.state.message } onChange={ event => this.setState({ message: event.target.value }) }/>
+          <i onClick={ this.messageSubmit } className="send-message-icon fa fa-paper-plane"/>
         </FormGroup>
       </Form>
-    </div>
+    </Animated>;
   }
 }
 
