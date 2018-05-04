@@ -1,7 +1,7 @@
 const emojiJson = require('emoji-datasource-apple/emoji.json');
 
 export function formatChatInputValue(message) {
-  let NEW_MESSAGE = message;
+  let formattedMessage = message;
   const EMOJI_COLONS = message.match(/:(.*?):/gmi);
 
   if (EMOJI_COLONS) {
@@ -16,20 +16,19 @@ export function formatChatInputValue(message) {
 
       IMAGE.setAttribute('src', IMAGE_SOURCE);
       IMAGE.classList.add('emoji-image');
-
-      NEW_MESSAGE = NEW_MESSAGE.replace(emojiItem, IMAGE.outerHTML);
+      formattedMessage = formattedMessage.replace(emojiItem, IMAGE.outerHTML);
     });
-    return NEW_MESSAGE;
+    return formattedMessage;
   }
   return message;
 }
 
 export function formatChatMessage(message) {
-  let NEW_MESSAGE = document.createElement("div");
+  let formattedMessage = document.createElement("div");
 
-  NEW_MESSAGE.innerHTML = message;
+  formattedMessage.innerHTML = message;
+  const EMOJI_COLONS = formattedMessage.innerHTML.match(/:(.*?):/gmi);
 
-  const EMOJI_COLONS = NEW_MESSAGE.innerHTML.match(/:(.*?):/gmi);
   if (EMOJI_COLONS) {
     EMOJI_COLONS.forEach(emojiItem => {
       const EMOJI = emojiJson.find(item => item.short_name === emojiItem.slice(1, -1));
@@ -42,10 +41,9 @@ export function formatChatMessage(message) {
 
       IMAGE.setAttribute('src', IMAGE_SOURCE);
       IMAGE.classList.add('emoji-image');
-
-      NEW_MESSAGE = NEW_MESSAGE.innerHTML.replace(emojiItem, IMAGE.outerHTML);
+      formattedMessage = formattedMessage.innerHTML.replace(emojiItem, IMAGE.outerHTML);
     });
   }
 
-  return NEW_MESSAGE;
+  return formattedMessage;
 }

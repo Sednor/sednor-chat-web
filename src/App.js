@@ -57,8 +57,7 @@ class App extends Component {
           onClick={::this.handleNotificationClick}
           timeout={5000}
           title={this.props.notifications.title}
-          options={this.props.notifications.options}
-      />
+          options={this.props.notifications.options} />
       <audio ref={this.audioSound} id="sound" preload="auto">
         <source src={messageMP3} type="audio/mpeg" />
         <source src={messageOGG} type="audio/ogg" />
