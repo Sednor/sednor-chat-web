@@ -1,17 +1,25 @@
-import { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Notification from 'react-web-notification';
 import PropTypes from 'prop-types';
 
-import MainHandlePage from './pages/MainHandlePage';
-import Loading from './layout/Loading';
-import UserLoginPage from './pages/UserLoginPage';
+import Router from './components/Router';
 
-import * as notificationActions from './actions/notifications'
+import * as notificationActions from './actions/notifications';
+import * as chatActions from './actions/chats';
+
+import messageM4R from './assets/audio/message.m4r';
+import messageMP3 from './assets/audio/message.mp3';
+import messageOGG from './assets/audio/message.ogg';
+
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.audioSound = React.createRef();
+  }
+
   static propTypes = {
     notifications: PropTypes.object,
     actions: PropTypes.object
@@ -22,46 +30,50 @@ class App extends Component {
     actions: {}
   };
 
-  handlePermissionGranted() {
-    console.log('Permission Granted');
-    this.props.actions.enableNotifications();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.notifications.type === 'message') {
+      this.audioSound.current.play();
+    }
   }
 
-  handlePermissionDenied() {
-    console.log('Permission Denied');
-    this.props.actions.disableNotifications();
-  }
+  handleNotificationClick(event) {
+    if (event.target.title !== 'Error') {
+      const CHAT = this.props.chats.all.find(chat => chat.id === event.target.data);
 
-  handleNotSupported() {
-    console.log('Web Notification not Supported');
-    this.props.actions.disableNotifications();
+      if (!this.props.chats.active.find(chat => chat.id === CHAT.id)) {
+        this.props.actions.openChat(CHAT);
+      }
+    }
   }
 
   render() {
     return <div className="app">
-      <Switch>
-        <Route exact path="/" component={MainHandlePage} />
-        <Route path="/loading" component={Loading} />
-        <Route path="/login" component={UserLoginPage} />
-      </Switch>
+      <Router />
       <Notification
           ignore={this.props.notifications.ignore && this.props.notifications.title !== ''}
-          notSupported={::this.handleNotSupported}
-          onPermissionGranted={::this.handlePermissionGranted}
-          onPermissionDenied={::this.handlePermissionDenied}
+          notSupported={this.props.actions.disableNotifications}
+          onPermissionGranted={this.props.actions.enableNotifications}
+          onPermissionDenied={this.props.actions.disableNotifications}
+          onClick={::this.handleNotificationClick}
           timeout={5000}
           title={this.props.notifications.title}
-          options={this.props.notifications.options}
-      />
+          options={this.props.notifications.options} />
+      <audio key={Math.random()} ref={this.audioSound} id="sound" preload="auto">
+        <source src={messageMP3} type="audio/mpeg" key={Math.random()} />
+        <source src={messageOGG} type="audio/ogg" key={Math.random()} />
+        <source src={messageM4R} type="audio/m4r" key={Math.random()} />
+        <embed hidden="true" autostart="false" loop="false" src={messageMP3} key={Math.random()} />
+      </audio>
     </div>;
   }
 }
 
 export default connect(
     state => ({
-      notifications: state.notifications
+      notifications: state.notifications,
+      chats: state.chats
     }),
     dispatch => ({
-      actions: bindActionCreators({ ...notificationActions }, dispatch)
+      actions: bindActionCreators({ ...notificationActions, ...chatActions }, dispatch)
     })
 )(App);

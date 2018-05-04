@@ -10,7 +10,7 @@ class MainUserSidebar extends Component {
     this.state = {
       searchValue: '',
       sideBarValue: 'content'
-    }
+    };
   }
 
   static propTypes = {
@@ -40,7 +40,7 @@ class MainUserSidebar extends Component {
                 <li onClick={() => this.setState({ sideBarValue: 'settings' })}
                     className={`control-panel-item ${this.state.sideBarValue === 'settings' ? 'active' : ''}`}><i
                     className="fa fa-cog" /></li>
-                <li className="control-panel-item"><i onClick={this.props.logout} className="fa fa-sign-out" /></li>
+                <li onClick={this.props.logout} className="control-panel-item"><i className="fa fa-sign-out" /></li>
               </ul>
             </div>
 
@@ -66,7 +66,7 @@ class MainUserSidebar extends Component {
                                     {chat.name}
                                   </div>
                                   <div className="chat-item-message">
-                                    {chat.messages[0] ? this.props.findUserById(chat.messages[chat.messages.length - 1].author).firstName + ' : ' + chat.messages[chat.messages.length - 1].payload : ''}
+                                    {chat.messages[0] ? `${this.props.findUserById(chat.messages[chat.messages.length - 1].author).firstName} : ${chat.messages[chat.messages.length - 1].payload}` : ''}
                                   </div>
                                 </div>
 
@@ -82,7 +82,7 @@ class MainUserSidebar extends Component {
 
             }
           </div>
-      )
+      );
     }
     return null;
   }

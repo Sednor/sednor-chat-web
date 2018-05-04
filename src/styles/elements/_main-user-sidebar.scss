@@ -66,30 +66,14 @@
           border-right: 3px solid $main-green-dark;
         }
 
-        &:not(:last-child) {
-          &:hover {
-            background: rgb(61, 68, 78);
-          }
+        &:hover {
+          background: rgb(61, 68, 78);
         }
 
-        &:last-child {
-          display: flex;
-          flex: 1 1 100%;
-          align-items: flex-end;
-          padding: 0;
-
-          i {
-            width: 100%;
-            cursor: pointer;
-            padding: 1rem 2rem;
-
-            &:hover {
-              background: rgb(61, 68, 78);
-            }
-          }
+        &:nth-child(2) {
+          margin-bottom: auto;
         }
       }
-
     }
   }
 

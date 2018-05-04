@@ -14,16 +14,16 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: [
-          { loader: 'babel-loader' }
-          // {
-          //   loader: 'eslint-loader',
-          //   options: {
-          //     failOnWarning: false,
-          //     failOnError: false,
-          //     fix: false,
-          //     quiet: false
-          //   }
-          // }
+          { loader: 'babel-loader' },
+          {
+            loader: 'eslint-loader',
+            options: {
+              failOnWarning: false,
+              failOnError: false,
+              fix: false,
+              quiet: false
+            }
+          }
         ]
       },
       {

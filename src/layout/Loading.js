@@ -32,8 +32,7 @@ class Loading extends Component {
     if (TOKEN) {
       this.props.actions.socketsConnecting();
       this.uploadAllEntities(TOKEN);
-    }
-    else {
+    } else {
       this.props.history.push('/');
     }
   }
@@ -43,15 +42,17 @@ class Loading extends Component {
       this.props.actions.fetchUserData(TOKEN);
       this.props.actions.fetchUsers();
       this.props.actions.fetchChats();
-    }
-    catch (error) {
+    } catch (error) {
       this.abortLoading();
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.currentUser.data.id && !nextProps.chats.loading && !nextProps.users.loading && nextProps.webSocket.socket) {
-      this.props.actions.subscribeToWebSocketMessages(nextProps.webSocket.socket);
+      this.props.actions.socketsConnect(nextProps.webSocket.socket);
+      nextProps.chats.all.forEach(chat => {
+        nextProps.webSocket.socket.emit('open-chat', { room: chat.id });
+      });
       this.props.history.push('/');
     }
   }
@@ -62,7 +63,7 @@ class Loading extends Component {
   }
 
   render() {
-    return <SpinnerModal show abortRequest={this.abortLoading} />
+    return <SpinnerModal show abortRequest={this.abortLoading} />;
   }
 }
 
@@ -76,5 +77,4 @@ export default connect(
     }),
     dispatch => ({
       actions: bindActionCreators({ ...currentUserActions, ...usersActions, ...chatActions, ...webSocketActions }, dispatch)
-    }))
-(Loading);
+    }))(Loading);

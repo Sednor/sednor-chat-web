@@ -27,24 +27,28 @@ class UserLoginPage extends Component {
       await fetchToken(loginType, data);
       if (loginType === 'signUp') {
         this.setState({ loading: false });
-        this.props.actions.createNotification('success', 'Your account was successfully created!', {
+        const SUCCESS_NOTIFICATION = {
+          type: 'success',
+          title: 'Your account was successfully created!',
           body: 'Verifying letter was sent to your email. Please, verify your account and sign in!',
-          tag: Date.now(),
-          lang: 'en',
-          dir: 'ltr'
-        });
+          tag: Date.now()
+        };
+
+        this.props.actions.createNotification(SUCCESS_NOTIFICATION);
       }
       if (loginType === 'signIn') {
         this.setState({ loading: false });
         this.props.history.push('/loading');
       }
+    } catch (error) {
+      const ERROR_NOTIFICATION = {
+        type: 'error',
+        title: 'Error',
+        body: error.message,
+        tag: Date.now()
+      };
 
-    }
-    catch (error) {
-      this.props.actions.createNotification('error', 'Error', {
-        body: error.message, tag: Date.now(), lang: 'en',
-        dir: 'ltr'
-      });
+      this.props.actions.createNotification(ERROR_NOTIFICATION);
       this.setState({ loading: false });
     }
   }
@@ -59,15 +63,15 @@ class UserLoginPage extends Component {
         <div>
           <Header />
           <UserLoginForm onSuccess={this.formDataSubmit} />
-          <SpinnerModal show={this.state.loading}
-                        abortRequest={() => this.setState({ loading: false })} />
+          <SpinnerModal
+              show={this.state.loading}
+              abortRequest={() => this.setState({ loading: false })} />
         </div>
-    )
+    );
   }
 }
 
 export default connect(
-    state => ({}),
     dispatch => ({
       actions: bindActionCreators({ ...notificationActions }, dispatch)
     })

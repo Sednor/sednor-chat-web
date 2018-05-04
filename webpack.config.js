@@ -30,7 +30,7 @@ module.exports = Object.assign({}, WEBPACK_CONFIG, {
             }
           },
           {
-            test: /\.(ttf|eot|jpe?g|svg|png|gif|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            test: /\.(ttf|eot|jpe?g|svg|png|gif|ico|mp3|m4r|ogg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
             use: 'file-loader'
           }
         ]

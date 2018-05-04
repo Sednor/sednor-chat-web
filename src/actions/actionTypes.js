@@ -1,20 +1,28 @@
 import keymirror from 'keymirror';
 
 export const ACTIONS = keymirror({
-  //USER
+  /*
+   USER
+   */
   REQUEST_USER_DATA: null,
   RECEIVE_USER_DATA: null,
   ABORT_USER_DATA: null,
 
-  //USERS
+  /*
+   USERS
+   */
   REQUEST_USERS: null,
   RECEIVE_USERS: null,
 
-  //MODALS
+  /*
+   MODALS
+   */
   OPEN_CHAT_MODAL: null,
   CLOSE_CHAT_MODAL: null,
 
-  //CHATS
+  /*
+   CHATS
+   */
   REQUEST_CHATS: null,
   RECEIVE_CHATS: null,
   CREATE_CHAT: null,
@@ -23,7 +31,9 @@ export const ACTIONS = keymirror({
   OPEN_CHAT: null,
   CLOSE_CHAT: null,
 
-  //SOCKETS
+  /*
+   SOCKETS
+   */
   SOCKETS_CONNECTING: null,
   SOCKETS_CONNECT: null,
   SOCKETS_DISCONNECTING: null,
@@ -31,9 +41,11 @@ export const ACTIONS = keymirror({
   SOCKETS_MESSAGE_SENDING: null,
   SOCKETS_MESSAGE_RECEIVING: null,
 
-  //NOTIFICATIONS
+  /*
+   NOTIFICATIONS
+   */
   CREATE_NOTIFICATION: null,
   ENABLE_NOTIFICATIONS: null,
-  DISABLE_NOTIFICATIONS: null
-
+  DISABLE_NOTIFICATIONS: null,
+  CLOSE_NOTIFICATION: null
 });

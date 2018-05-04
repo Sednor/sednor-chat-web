@@ -1,8 +1,10 @@
-import openSocket from 'socket.io-client';
+import io from 'socket.io-client';
 
 import { ACTIONS } from '../actions/actionTypes';
 
-import { URL } from '../config';
+import { DOMAIN } from '../config';
+
+import { getToken } from '../utils/tokenUtils';
 
 const INITIAL_STATE = {
   socket: null,
@@ -17,7 +19,7 @@ export default function webSocket(state = INITIAL_STATE, action = {}) {
     case ACTIONS.SOCKETS_CONNECTING:
       return {
         ...state,
-        socket: openSocket(URL.webSocket),
+        socket: io(`${DOMAIN}/ws/v1/chat?token=${getToken()}`, { transports: ['websocket'] }),
         loaded: true,
         message: 'Connecting...',
         connected: false,

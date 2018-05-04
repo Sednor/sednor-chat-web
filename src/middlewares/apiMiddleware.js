@@ -4,10 +4,11 @@ import { getToken, setToken } from '../utils/tokenUtils';
 
 export default function apiMiddleware(url, method, data, headers = {}) {
   const HEADERS = {
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': getToken()
+    Authorization: getToken()
   };
+
   return axios({ url, method, data, headers: { ...HEADERS, headers } })
       .then(res => {
         if (res.headers.authorization) {
@@ -15,4 +16,4 @@ export default function apiMiddleware(url, method, data, headers = {}) {
         }
         return res;
       });
-};
+}

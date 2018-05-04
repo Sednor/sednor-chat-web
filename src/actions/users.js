@@ -16,11 +16,7 @@ export function fetchUsers() {
           dispatch({
             type: ACTIONS.RECEIVE_USERS,
             data: response.data.map(user => new User(user))
-          })
-        })
-        .catch(error => {
-          console.log(error);
-        })
-
+          });
+        });
   };
 }

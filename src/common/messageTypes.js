@@ -1,4 +1,6 @@
-//WEBSOCKET
+/*
+WEBSOCKET
+ */
 
 import keymirror from 'keymirror';
 

@@ -12,4 +12,4 @@ export default {
   webSocket,
   chats,
   notifications
-}
+};

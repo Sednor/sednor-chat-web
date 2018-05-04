@@ -16,16 +16,12 @@ export function fetchChats() {
           dispatch({
             type: ACTIONS.RECEIVE_CHATS,
             data: response.data.map(chat => new Chat(chat))
-          })
-        })
-        .catch(error => {
-          console.log(error);
-        })
-
+          });
+        });
   };
 }
 
-export function createChat(chatMembers) {
+export function createChat(chatMembers, socket) {
   return dispatch => {
     api.post(URL.chats.main, { users: chatMembers.map(item => ({ ...item, id: item.id })) })
         .then(res => {
@@ -33,10 +29,8 @@ export function createChat(chatMembers) {
             type: ACTIONS.CREATE_CHAT,
             data: new Chat(res.data)
           });
-        })
-        .catch(error => {
-          console.log(error);
-        })
+          socket.emit('create-chat', { room: res.data.id, users: res.data.users });
+        });
   };
 }
 
@@ -45,8 +39,17 @@ export function updateChat(chat) {
     dispatch({
       type: ACTIONS.UPDATE_CHAT,
       data: chat
-    })
-  }
+    });
+  };
+}
+
+export function addChatMessage(chat, message) {
+  return dispatch => {
+    const CHAT_TO_UPDATE = { ...chat };
+
+    CHAT_TO_UPDATE.messages.push(message);
+    dispatch(updateChat(CHAT_TO_UPDATE));
+  };
 }
 
 export function openChat(chat) {
@@ -54,8 +57,8 @@ export function openChat(chat) {
     dispatch({
       type: ACTIONS.OPEN_CHAT,
       data: chat
-    })
-  }
+    });
+  };
 }
 
 export function closeChat(chat) {
@@ -63,6 +66,6 @@ export function closeChat(chat) {
     dispatch({
       type: ACTIONS.CLOSE_CHAT,
       data: chat
-    })
-  }
+    });
+  };
 }

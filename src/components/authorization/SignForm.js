@@ -105,7 +105,7 @@ class SignForm extends Component {
             this.props.formType === 'signIn' ? 'Sign In' : 'Sign Up'
           }</Button>
         </div>
-    )
+    );
   }
 }
 
