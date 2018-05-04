@@ -22,7 +22,7 @@ class SpinnerModal extends Component {
     return (
         <Modal className="spinner-modal" isOpen={this.props.show}>
           <ModalBody>
-            <i className="loading-spinner fa fa-spinner"/>
+            <i className="loading-spinner fa fa-spinner" />
             <div className="loading-text">
               Loading
             </div>

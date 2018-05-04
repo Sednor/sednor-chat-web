@@ -61,10 +61,11 @@ class UserLoginPage extends Component {
   render() {
     return (
         <div>
-          <Header/>
-          <UserLoginForm onSuccess={this.formDataSubmit}/>
-          <SpinnerModal show={this.state.loading}
-                        abortRequest={() => this.setState({ loading: false })}/>
+          <Header />
+          <UserLoginForm onSuccess={this.formDataSubmit} />
+          <SpinnerModal
+              show={this.state.loading}
+              abortRequest={() => this.setState({ loading: false })} />
         </div>
     );
   }

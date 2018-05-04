@@ -36,11 +36,11 @@ class MainUserSidebar extends Component {
               <ul className="control-panel">
                 <li onClick={() => this.setState({ sideBarValue: 'content' })}
                     className={`control-panel-item ${this.state.sideBarValue === 'content' ? 'active' : ''}`}><i
-                    className="fa fa-comments"/></li>
+                    className="fa fa-comments" /></li>
                 <li onClick={() => this.setState({ sideBarValue: 'settings' })}
                     className={`control-panel-item ${this.state.sideBarValue === 'settings' ? 'active' : ''}`}><i
-                    className="fa fa-cog"/></li>
-                <li onClick={this.props.logout} className="control-panel-item"><i className="fa fa-sign-out"/></li>
+                    className="fa fa-cog" /></li>
+                <li onClick={this.props.logout} className="control-panel-item"><i className="fa fa-sign-out" /></li>
               </ul>
             </div>
 
@@ -50,8 +50,8 @@ class MainUserSidebar extends Component {
                     <div className="content-column-header">
                       <Input onChange={event => this.setState({ searchValue: event.target.value })}
                              style={{ fontFamily: 'FontAwesome' }}
-                             placeholder="&#61442; Search..."/>
-                      <i onClick={this.props.onChatModalOpen} className="create-chat-button fa fa-plus"/>
+                             placeholder="&#61442; Search..." />
+                      <i onClick={this.props.onChatModalOpen} className="create-chat-button fa fa-plus" />
                     </div>
                     <div className="content-column-body">
                       <ul className="chat-list">

@@ -31,12 +31,12 @@ class MainHandlePage extends Component {
 
   render() {
     if (this.state.authorized && this.props.currentUser.data.id) {
-      return <MainUserPage history={this.props.history}/>;
+      return <MainUserPage history={this.props.history} />;
     }
     if (this.state.authorized && !this.props.currentUser.data.id) {
-      return <Redirect to="/loading"/>;
+      return <Redirect to="/loading" />;
     }
-    return <Redirect to="/login"/>;
+    return <Redirect to="/login" />;
   }
 }
 

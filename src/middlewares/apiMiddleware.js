@@ -10,10 +10,10 @@ export default function apiMiddleware(url, method, data, headers = {}) {
   };
 
   return axios({ url, method, data, headers: { ...HEADERS, headers } })
-    .then(res => {
-      if (res.headers.authorization) {
-        setToken(res.headers.authorization);
-      }
-      return res;
-    });
+      .then(res => {
+        if (res.headers.authorization) {
+          setToken(res.headers.authorization);
+        }
+        return res;
+      });
 }

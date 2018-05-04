@@ -154,56 +154,59 @@ class MainUserPage extends Component {
     };
 
     return (
-      <div className="messenger-main-page">
-        <MainUserSidebar userData={ this.props.currentUser.data }
-                         logout={ this.logout }
-                         onChatModalOpen={ this.props.actions.openChatModal }
-                         users={ AVAILABLE_USERS }
-                         findUserById={ this.findUserById }
-                         chats={ this.props.chats.all }
-                         onChatOpen={ this.openUserChat }
-                         activeChats={ this.state.activeChats }
+        <div className="messenger-main-page">
+          <MainUserSidebar
+              userData={this.props.currentUser.data}
+              logout={this.logout}
+              onChatModalOpen={this.props.actions.openChatModal}
+              users={AVAILABLE_USERS}
+              findUserById={this.findUserById}
+              chats={this.props.chats.all}
+              onChatOpen={this.openUserChat}
+              activeChats={this.state.activeChats} />
+          <ReactGridLayout
+              className="messenger-main-page-content"
+              draggableCancel="input,textarea,i,form"
+              cols={3}
+              useCSSTransforms={true}>
 
-        />
-        <ReactGridLayout className="messenger-main-page-content"
-                         draggableCancel="input,textarea,i,form"
-                         cols={ 3 }
-                         useCSSTransforms={ true }>
+            {this.state.activeChats.map((chat, index) =>
+                <div
+                    className="chat"
+                    key={index}
+                    data-grid={{ i: index.toString(), ...ITEM_LAYOUT }}>
+                  <ChatItem
+                      chat={chat}
+                      chatsData={this.props.chats}
+                      addMessage={this.props.actions.addChatMessage}
+                      closeChat={this.closeUserChat}
+                      users={this.props.users.data}
+                      currentUser={this.props.currentUser.data}
+                      index={index}
+                      socket={this.props.webSocket.socket} />
+                </div>)
+            }
 
-          { this.state.activeChats.map((chat, index) => <div
-            className="chat"
-            key={ index }
-            data-grid={ { i: index.toString(), ...ITEM_LAYOUT } }>
-            <ChatItem chat={ chat }
-                      chatsData={ this.props.chats }
-                      addMessage={ this.props.actions.addChatMessage }
-                      closeChat={ this.closeUserChat }
-                      users={ this.props.users.data }
-                      currentUser={ this.props.currentUser.data }
-                      index={ index }
-                      socket={ this.props.webSocket.socket }/>
-          </div>)
-          }
-
-        </ReactGridLayout>
-        <ChatModal onchatCreate={ this.createUserchat }
-                   show={ this.props.modals.chatModal }
-                   users={ AVAILABLE_USERS }
-                   close={ this.props.actions.closeChatModal }/>
-        <SpinnerModal show={ this.props.chats.loading }/>
-      </div>
+          </ReactGridLayout>
+          <ChatModal
+              onchatCreate={this.createUserchat}
+              show={this.props.modals.chatModal}
+              users={AVAILABLE_USERS}
+              close={this.props.actions.closeChatModal} />
+          <SpinnerModal show={this.props.chats.loading} />
+        </div>
     );
   }
 }
 
 export default compose(connect(
-  state => ({
-    currentUser: state.currentUser,
-    modals: state.modals,
-    users: state.users,
-    chats: state.chats,
-    webSocket: state.webSocket
-  }),
-  dispatch => ({
-    actions: bindActionCreators({ ...currentUser, ...modalsActions, ...usersActions, ...chatActions, ...notificationActions, ...webSocketActions }, dispatch)
-  })))(MainUserPage);
+    state => ({
+      currentUser: state.currentUser,
+      modals: state.modals,
+      users: state.users,
+      chats: state.chats,
+      webSocket: state.webSocket
+    }),
+    dispatch => ({
+      actions: bindActionCreators({ ...currentUser, ...modalsActions, ...usersActions, ...chatActions, ...notificationActions, ...webSocketActions }, dispatch)
+    })))(MainUserPage);

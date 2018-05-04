@@ -63,7 +63,7 @@ class Loading extends Component {
   }
 
   render() {
-    return <SpinnerModal show abortRequest={this.abortLoading}/>;
+    return <SpinnerModal show abortRequest={this.abortLoading} />;
   }
 }
 

@@ -186,7 +186,7 @@ class UserLoginForm extends Component {
                             values={this.state.values}
                             formType={this.state.formType}
                             validate={this.submitValidation}
-                            onInputValueChange={this.onInputValueChange}/>
+                            onInputValueChange={this.onInputValueChange} />
 
                   <div className="divider">or</div>
 

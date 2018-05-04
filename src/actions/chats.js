@@ -12,25 +12,25 @@ export function fetchChats() {
       type: ACTIONS.REQUEST_CHATS
     });
     api.get(URL.chats.get)
-      .then(response => {
-        dispatch({
-          type: ACTIONS.RECEIVE_CHATS,
-          data: response.data.map(chat => new Chat(chat))
+        .then(response => {
+          dispatch({
+            type: ACTIONS.RECEIVE_CHATS,
+            data: response.data.map(chat => new Chat(chat))
+          });
         });
-      });
   };
 }
 
 export function createChat(chatMembers, socket) {
   return dispatch => {
     api.post(URL.chats.main, { users: chatMembers.map(item => ({ ...item, id: item.id })) })
-      .then(res => {
-        dispatch({
-          type: ACTIONS.CREATE_CHAT,
-          data: new Chat(res.data)
+        .then(res => {
+          dispatch({
+            type: ACTIONS.CREATE_CHAT,
+            data: new Chat(res.data)
+          });
+          socket.emit('create-chat', { room: res.data.id, users: res.data.users });
         });
-        socket.emit('create-chat', { room: res.data.id, users: res.data.users });
-      });
   };
 }
 

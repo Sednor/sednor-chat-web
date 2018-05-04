@@ -61,12 +61,12 @@ class ChatItem extends Component {
     return <Animated animationIn="zoomIn" animationOut="fadeOut" className="chat-content">
       <div className="chat-header">
         <h4 className="chat-name">
-          { this.props.chat.name }
+          {this.props.chat.name}
         </h4>
         <div className="chat-header-control">
-          <i className="fa fa-phone"/>
-          <i className="fa fa-video-camera"/>
-          <i onClick={ () => this.props.closeChat(this.props.chat) } className="chat-close-icon fa fa-times"/>
+          <i className="fa fa-phone" />
+          <i className="fa fa-video-camera" />
+          <i onClick={() => this.props.closeChat(this.props.chat)} className="chat-close-icon fa fa-times" />
         </div>
       </div>
       <div className="chat-body">
@@ -75,34 +75,34 @@ class ChatItem extends Component {
             if (this.props.chat.messages[index - 1]) {
               if (this.props.chat.messages[index - 1].author !== message.author) {
                 return (
-                  <div className="message full-message" key={ Math.random() }>
-                    <div className="message-author">
-                      <div className="message-author-photo">
-                        {
-                          this.props.users.find(user => user.id === message.author).firstName[0]
-                        }
-                      </div>
-                      <span className="message-author-name">
-                               { getFullUserName(this.props.users.find(user => user.id === message.author)) }
+                    <div className="message full-message" key={Math.random()}>
+                      <div className="message-author">
+                        <div className="message-author-photo">
+                          {
+                            this.props.users.find(user => user.id === message.author).firstName[0]
+                          }
+                        </div>
+                        <span className="message-author-name">
+                               {getFullUserName(this.props.users.find(user => user.id === message.author))}
                             </span>
-                      <span className="message-timestamp">
-                  { getShortTimestamp(message.timestamp) }
+                        <span className="message-timestamp">
+                  {getShortTimestamp(message.timestamp)}
                 </span>
-                    </div>
-                    <div className="message-body">
-                      <div className="pl-5 message-body-text">
-                        {
-                          message.payload.slice()
-                        }
+                      </div>
+                      <div className="message-body">
+                        <div className="pl-5 message-body-text">
+                          {
+                            message.payload.slice()
+                          }
+                        </div>
                       </div>
                     </div>
-                  </div>
                 );
               } else {
-                return <div className="message" key={ Math.random() }>
+                return <div className="message" key={Math.random()}>
                   <div className="message-body">
                         <span className="message-timestamp">
-                  { getShortTimestamp(message.timestamp) }
+                  {getShortTimestamp(message.timestamp)}
                 </span>
                     <div className="message-body-text">
                       {
@@ -113,7 +113,7 @@ class ChatItem extends Component {
                 </div>;
               }
             } else {
-              return <div className="message full-message" key={ Math.random() }>
+              return <div className="message full-message" key={Math.random()}>
                 <div className="message-author">
                   <div className="message-author-photo">
                     {
@@ -121,10 +121,10 @@ class ChatItem extends Component {
                     }
                   </div>
                   <span className="message-author-name">
-                               { getFullUserName(this.props.users.find(user => user.id === message.author)) }
+                               {getFullUserName(this.props.users.find(user => user.id === message.author))}
                             </span>
                   <span className="message-timestamp">
-                  { getShortTimestamp(message.timestamp) }
+                  {getShortTimestamp(message.timestamp)}
                 </span>
                 </div>
                 <div className="message-body">
@@ -139,11 +139,11 @@ class ChatItem extends Component {
           })
         }
       </div>
-      <Form onSubmit={ this.messageSubmit } className="chat-form">
+      <Form onSubmit={this.messageSubmit} className="chat-form">
         <FormGroup className="d-flex w-100 m-0 align-items-center">
-          <i className="new-file-icon fa fa-plus"/>
-          <Input value={ this.state.message } onChange={ event => this.setState({ message: event.target.value }) }/>
-          <i onClick={ this.messageSubmit } className="send-message-icon fa fa-paper-plane"/>
+          <i className="new-file-icon fa fa-plus" />
+          <Input value={this.state.message} onChange={event => this.setState({ message: event.target.value })} />
+          <i onClick={this.messageSubmit} className="send-message-icon fa fa-paper-plane" />
         </FormGroup>
       </Form>
     </Animated>;

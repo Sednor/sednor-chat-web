@@ -26,10 +26,10 @@ export function socketsConnect(socket) {
 export function subscribeToWebSocketMessages(socket) {
   return dispatch => {
     Object.keys(MESSAGE_TYPES)
-      .forEach(type => socket.on(type, payload =>
-          dispatch({ type, payload })
-        )
-      );
+        .forEach(type => socket.on(type, payload =>
+                dispatch({ type, payload })
+            )
+        );
   };
 }
 
