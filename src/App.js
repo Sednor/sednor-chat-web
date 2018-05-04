@@ -58,11 +58,11 @@ class App extends Component {
           timeout={5000}
           title={this.props.notifications.title}
           options={this.props.notifications.options} />
-      <audio ref={this.audioSound} id="sound" preload="auto">
-        <source src={messageMP3} type="audio/mpeg" />
-        <source src={messageOGG} type="audio/ogg" />
-        <source src={messageM4R} type="audio/m4r" />
-        <embed hidden="true" autostart="false" loop="false" src={messageMP3} />
+      <audio key={Math.random()} ref={this.audioSound} id="sound" preload="auto">
+        <source src={messageMP3} type="audio/mpeg" key={Math.random()} />
+        <source src={messageOGG} type="audio/ogg" key={Math.random()} />
+        <source src={messageM4R} type="audio/m4r" key={Math.random()} />
+        <embed hidden="true" autostart="false" loop="false" src={messageMP3} key={Math.random()} />
       </audio>
     </div>;
   }
