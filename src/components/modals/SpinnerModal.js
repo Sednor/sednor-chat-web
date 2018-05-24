@@ -14,8 +14,7 @@ class SpinnerModal extends Component {
 
   static defaultProps = {
     show: false,
-    abortRequest: () => {
-    }
+    abortRequest: () => {}
   };
 
   render() {

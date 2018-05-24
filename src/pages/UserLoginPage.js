@@ -1,6 +1,4 @@
 import { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import { fetchToken } from '../api/token';
 
@@ -9,7 +7,7 @@ import SpinnerModal from '../components/modals/SpinnerModal';
 
 import Header from '../layout/Header';
 
-import * as notificationActions from '../actions/notifications';
+import { createNotification } from '../utils/notificationUtils';
 
 class UserLoginPage extends Component {
   constructor(props) {
@@ -30,11 +28,10 @@ class UserLoginPage extends Component {
         const SUCCESS_NOTIFICATION = {
           type: 'success',
           title: 'Your account was successfully created!',
-          body: 'Verifying letter was sent to your email. Please, verify your account and sign in!',
-          tag: Date.now()
+          body: 'Verifying letter was sent to your email. Please, verify your account and sign in!'
         };
 
-        this.props.actions.createNotification(SUCCESS_NOTIFICATION);
+        createNotification(SUCCESS_NOTIFICATION);
       }
       if (loginType === 'signIn') {
         this.setState({ loading: false });
@@ -44,11 +41,10 @@ class UserLoginPage extends Component {
       const ERROR_NOTIFICATION = {
         type: 'error',
         title: 'Error',
-        body: error.message,
-        tag: Date.now()
+        body: error.message
       };
 
-      this.props.actions.createNotification(ERROR_NOTIFICATION);
+      createNotification(ERROR_NOTIFICATION);
       this.setState({ loading: false });
     }
   }
@@ -71,8 +67,4 @@ class UserLoginPage extends Component {
   }
 }
 
-export default connect(
-    dispatch => ({
-      actions: bindActionCreators({ ...notificationActions }, dispatch)
-    })
-)(UserLoginPage);
+export default UserLoginPage;

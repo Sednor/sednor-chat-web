@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Input } from 'reactstrap';
 import PropTypes from 'prop-types';
-import { Animated } from 'react-animated-css';
 
 import { getFullUserName } from '../../utils/userUtils';
 
@@ -17,6 +16,8 @@ class ChatItem extends Component {
       message: ''
     };
     this.messageSubmit = this.messageSubmit.bind(this);
+    this.onMessageValueChange = this.onMessageValueChange.bind(this);
+    this.messageContainer = React.createRef();
   }
 
   static propTypes = {
@@ -37,6 +38,14 @@ class ChatItem extends Component {
     index: Math.random()
   };
 
+  componentDidUpdate() {
+    const CHAT_ITEM_BODY = this.messageContainer.current;
+
+    if (CHAT_ITEM_BODY) {
+      CHAT_ITEM_BODY.scrollTop = CHAT_ITEM_BODY.scrollHeight;
+    }
+  }
+
   messageSubmit(event) {
     if (event) {
       event.preventDefault();
@@ -49,16 +58,20 @@ class ChatItem extends Component {
       });
 
       this.setState({ message: '' });
-      this.props.socket.emit('message', {
-        room: this.props.chat.id,
-        payload: MESSAGE
-      });
+
       this.props.addMessage(this.props.chat, MESSAGE);
     }
   }
 
+  onMessageValueChange(event) {
+    this.props.emitTyping(this.props.chat.id);
+    this.setState({ message: event.target.value });
+  }
+
   render() {
-    return <Animated animationIn="zoomIn" animationOut="fadeOut" className="chat-content">
+    const USERS_TYPING = this.props.chat.users.filter(user => user.typing);
+
+    return <div className="chat-content">
       <div className="chat-header">
         <h4 className="chat-name">
           {this.props.chat.name}
@@ -69,7 +82,7 @@ class ChatItem extends Component {
           <i onClick={() => this.props.closeChat(this.props.chat)} className="chat-close-icon fa fa-times" />
         </div>
       </div>
-      <div className="chat-body">
+      <div ref={this.messageContainer} key={Math.random()} className="chat-body">
         {
           this.props.chat.messages.map((message, index) => {
             if (this.props.chat.messages[index - 1]) {
@@ -139,14 +152,24 @@ class ChatItem extends Component {
           })
         }
       </div>
+      {
+        USERS_TYPING.length ?
+            <span>
+          {
+            `${USERS_TYPING.map(user => user.firstName).join(', ')} `
+          }
+              {USERS_TYPING.length > 1 ? 'are' : 'is'} typing...</span>
+            :
+            null
+      }
       <Form onSubmit={this.messageSubmit} className="chat-form">
         <FormGroup className="d-flex w-100 m-0 align-items-center">
           <i className="new-file-icon fa fa-plus" />
-          <Input value={this.state.message} onChange={event => this.setState({ message: event.target.value })} />
+          <Input value={this.state.message} onChange={this.onMessageValueChange} />
           <i onClick={this.messageSubmit} className="send-message-icon fa fa-paper-plane" />
         </FormGroup>
       </Form>
-    </Animated>;
+    </div>;
   }
 }
 

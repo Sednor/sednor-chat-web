@@ -1,21 +1,21 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux';
+import { bindActionCreators } from 'redux';
 import RGL, { WidthProvider } from 'react-grid-layout';
 
 import * as currentUser from '../actions/currentUser';
 import * as modalsActions from '../actions/modals';
 import * as usersActions from '../actions/users';
 import * as chatActions from '../actions/chats';
-import * as notificationActions from '../actions/notifications';
 import * as webSocketActions from '../actions/webSocket';
 
 import MainUserSidebar from '../components/MainUserSidebar';
-
 import ChatModal from '../components/modals/ChatModal';
 import ChatItem from '../components/chat/ChatItem';
 import SpinnerModal from '../components/modals/SpinnerModal';
+
+import { createNotification } from '../utils/notificationUtils';
 
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -24,13 +24,16 @@ class MainUserPage extends Component {
     super(props);
     this.state = {
       activeChats: [],
-      chatPosition: 0
+      chatPosition: 0,
+      usersTyping: []
     };
     this.createUserchat = this.createUserchat.bind(this);
     this.openUserChat = this.openUserChat.bind(this);
     this.logout = this.logout.bind(this);
     this.findUserById = this.findUserById.bind(this);
     this.closeUserChat = this.closeUserChat.bind(this);
+    this.addChatMessage = this.addChatMessage.bind(this);
+    this.emitTyping = this.emitTyping.bind(this);
   }
 
   static propTypes = {
@@ -42,6 +45,10 @@ class MainUserPage extends Component {
   };
 
   componentDidMount() {
+    this.props.webSocket.socket.on('user-typing', data => {
+      this.props.actions.handleUserTyping(this.props.chats.all, data);
+    });
+
     this.props.webSocket.socket.on('message', data => {
       this.props.actions.listenToChatMessage(this.props, data);
     });
@@ -73,11 +80,10 @@ class MainUserPage extends Component {
       const WARNING_NOTIFICATION = {
         type: 'warning',
         title: 'Too many chats opened!',
-        body: 'You have opened too many chats. Please, close some of them to open the new one.',
-        tag: Date.now()
+        body: 'You have opened too many chats. Please, close some of them to open the new one.'
       };
 
-      this.props.actions.createNotification(WARNING_NOTIFICATION);
+      createNotification(WARNING_NOTIFICATION);
       return;
     }
 
@@ -98,11 +104,10 @@ class MainUserPage extends Component {
       const WARNING_NOTIFICATION = {
         type: 'warning',
         title: 'Too many chats opened!',
-        body: 'You have opened too many chats. Please, close some of them to open the new one.',
-        tag: Date.now()
+        body: 'You have opened too many chats. Please, close some of them to open the new one.'
       };
 
-      this.props.actions.createNotification(WARNING_NOTIFICATION);
+      createNotification(WARNING_NOTIFICATION);
       return;
     }
     if (!this.state.activeChats.find(item => item.id === chat.id)) {
@@ -144,6 +149,21 @@ class MainUserPage extends Component {
     return this.props.users.data.find(user => user.id === id) || null;
   }
 
+  addChatMessage(chat, MESSAGE) {
+    this.props.actions.addChatMessage(chat, MESSAGE);
+    this.props.webSocket.socket.emit('message', {
+      room: chat.id,
+      payload: MESSAGE
+    });
+  }
+
+  emitTyping(id) {
+    this.props.webSocket.socket.emit('user-typing', {
+      user: this.props.currentUser.data.id,
+      room: id
+    });
+  }
+
   render() {
     const AVAILABLE_USERS = this.props.users.data.filter(user => user.id !== this.props.currentUser.data.id);
     const ITEM_LAYOUT = {
@@ -177,8 +197,9 @@ class MainUserPage extends Component {
                     data-grid={{ i: index.toString(), ...ITEM_LAYOUT }}>
                   <ChatItem
                       chat={chat}
+                      emitTyping={this.emitTyping}
                       chatsData={this.props.chats}
-                      addMessage={this.props.actions.addChatMessage}
+                      addMessage={this.addChatMessage}
                       closeChat={this.closeUserChat}
                       users={this.props.users.data}
                       currentUser={this.props.currentUser.data}
@@ -199,7 +220,7 @@ class MainUserPage extends Component {
   }
 }
 
-export default compose(connect(
+export default connect(
     state => ({
       currentUser: state.currentUser,
       modals: state.modals,
@@ -208,5 +229,5 @@ export default compose(connect(
       webSocket: state.webSocket
     }),
     dispatch => ({
-      actions: bindActionCreators({ ...currentUser, ...modalsActions, ...usersActions, ...chatActions, ...notificationActions, ...webSocketActions }, dispatch)
-    })))(MainUserPage);
+      actions: bindActionCreators({ ...currentUser, ...modalsActions, ...usersActions, ...chatActions, ...webSocketActions }, dispatch)
+    }))(MainUserPage);

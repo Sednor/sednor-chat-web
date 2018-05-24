@@ -4,9 +4,9 @@ import { ACTIONS } from './actionTypes';
 
 import { MESSAGE_TYPES } from '../common/messageTypes';
 
-import { createNotification } from './notifications';
+import { createNotification } from '../utils/notificationUtils';
 
-import { fetchChats, addChatMessage } from './chats';
+import { addChatMessage, fetchChats, updateChat } from './chats';
 
 import { getFullUserName } from '../utils/userUtils';
 
@@ -33,6 +33,12 @@ export function subscribeToWebSocketMessages(socket) {
   };
 }
 
+export function handleUserTyping(chats, messageData) {
+  return dispatch => {
+
+  };
+}
+
 export function listenToChatMessage(mainPageProps, messageData) {
   return dispatch => {
     if (!mainPageProps.chats.active.find(chat => chat.id === messageData.room)) {
@@ -40,11 +46,10 @@ export function listenToChatMessage(mainPageProps, messageData) {
         type: 'message',
         title: `${getFullUserName(mainPageProps.users.data.find(user => user.id === messageData.payload.author))} ${moment(messageData.payload.timeStamp).format('LT')}`,
         body: messageData.payload.payload,
-        tag: messageData.payload.timeStamp,
         data: messageData.room
       };
 
-      dispatch(createNotification(MESSAGE_NOTIFICATION));
+      createNotification(MESSAGE_NOTIFICATION);
     }
     dispatch(addChatMessage(mainPageProps.chats.all.find(chat => chat.id === messageData.room), messageData.payload));
   };

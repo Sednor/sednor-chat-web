@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Notification from 'react-web-notification';
 import PropTypes from 'prop-types';
 
 import Router from './components/Router';
 
-import * as notificationActions from './actions/notifications';
 import * as chatActions from './actions/chats';
 
 import messageM4R from './assets/audio/message.m4r';
@@ -49,15 +47,6 @@ class App extends Component {
   render() {
     return <div className="app">
       <Router />
-      <Notification
-          ignore={this.props.notifications.ignore && this.props.notifications.title !== ''}
-          notSupported={this.props.actions.disableNotifications}
-          onPermissionGranted={this.props.actions.enableNotifications}
-          onPermissionDenied={this.props.actions.disableNotifications}
-          onClick={::this.handleNotificationClick}
-          timeout={5000}
-          title={this.props.notifications.title}
-          options={this.props.notifications.options} />
       <audio key={Math.random()} ref={this.audioSound} id="sound" preload="auto">
         <source src={messageMP3} type="audio/mpeg" key={Math.random()} />
         <source src={messageOGG} type="audio/ogg" key={Math.random()} />
@@ -74,6 +63,6 @@ export default connect(
       chats: state.chats
     }),
     dispatch => ({
-      actions: bindActionCreators({ ...notificationActions, ...chatActions }, dispatch)
+      actions: bindActionCreators({ ...chatActions }, dispatch)
     })
 )(App);

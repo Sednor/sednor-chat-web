@@ -17,7 +17,7 @@ export function fetchToken(loginType, data) {
             resolve(jwToken);
           })
           .catch(error => {
-            reject(new Error(error.response.data.error.message));
+            reject(new Error(error.message));
           });
     }
 
@@ -32,7 +32,7 @@ export function fetchToken(loginType, data) {
             resolve(res.status);
           })
           .catch(error => {
-            reject(new Error(error.response.data.error.message));
+            reject(new Error(error.message));
           });
     }
   });

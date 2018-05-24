@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 
 import { ACTIONS } from '../actions/actionTypes';
 
-import { DOMAIN } from '../config';
+import { SERVER_DOMAIN } from '../config';
 
 import { getToken } from '../utils/tokenUtils';
 
@@ -14,12 +14,12 @@ const INITIAL_STATE = {
   history: []
 };
 
-export default function webSocket(state = INITIAL_STATE, action = {}) {
+export default function webSocket(state = { ...INITIAL_STATE }, action = {}) {
   switch (action.type) {
     case ACTIONS.SOCKETS_CONNECTING:
       return {
         ...state,
-        socket: io(`${DOMAIN}/ws/v1/chat?token=${getToken()}`, { transports: ['websocket'] }),
+        socket: io(`${SERVER_DOMAIN}/ws/v1/chat?token=${getToken()}`, { transports: ['websocket'] }),
         loaded: true,
         message: 'Connecting...',
         connected: false,
